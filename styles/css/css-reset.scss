@@ -1,0 +1,25 @@
+
+@import 'partials/vars.scss';
+
+html {
+    color: $black_color;
+    background: $white_color;
+}
+body,
+div,
+form,
+input,
+textarea {
+    margin: $default_margin;
+    padding: $default_padding;
+}
+img {
+    border: $default_border;
+}
+input,
+textarea {
+    font-family: $var_inherit;
+    font-size: $var_inherit;
+    font-weight: $var_inherit;
+    font-size: $var_100_percent;
+}

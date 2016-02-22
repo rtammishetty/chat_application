@@ -1,0 +1,23 @@
+// wrapper class is one layout
+.layout-wrapper {
+  @include browser-transform(-50%);
+  display: block;
+  background: $white;
+  font-size: $baseFont;
+  position: relative;
+  margin: 0 auto;
+  top: 50%;
+  border: 1px solid $grey; 
+}
+  
+.layout-wrapper, 
+.layout-imageDialog {
+  height: 100%;
+  width: 405px !important; 
+} 
+  
+.layout-default-position, 
+.layout-wrapper {
+  text-align: $text-align;
+  color: $grey-med; 
+}  

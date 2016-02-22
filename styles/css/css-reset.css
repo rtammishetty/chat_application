@@ -1,0 +1,26 @@
+html {
+  color: #000;
+  background: #fff; }
+
+body,
+div,
+form,
+input,
+textarea {
+  margin: 0;
+  padding: 0; 
+}
+
+img {
+  border: 0; 
+}
+
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-size: 100%; 
+}
+
+/*# sourceMappingURL=css-reset.css.map */

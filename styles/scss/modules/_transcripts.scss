@@ -1,0 +1,22 @@
+// .defaultBubble, .bubble-agent, .bubble-customer 
+.module-transcripts {
+  @include browser-effects(animation, 800ms);
+  clear: both;
+  font-family: $font-family;
+  font-size: $baseFont;
+  font-weight: 200;
+  line-height: 24px;
+  max-width: 63%;
+  margin: $default_margin;
+  padding: 15px 0 25px 0;
+  position: relative;
+  text-align: left;
+  border: none;
+  border-radius: 5px;
+  max-width: 420px;
+  word-wrap: break-word;
+  float: left;
+  animation: messageFade 800ms;
+  background: $white;
+  color: $black; 
+}

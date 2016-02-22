@@ -1,0 +1,21 @@
+{
+  "name": "corechatui_v1",
+  "version": "1.0.0",
+  "main": "app.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-minify": "0.0.5",
+    "gulp-notify": "^2.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.corp.ABC_Company.com/corechatui_group/corechatui.git"
+  },
+  "description": ""
+}

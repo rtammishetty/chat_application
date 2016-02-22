@@ -1,0 +1,44 @@
+@mixin calculateFont($fontSize,$fontWeight:'') {
+  font-size:(($baseFont)+($fontSize))+px;
+  @if $fontWeight != '' {
+    font-weight:($fontWeight);
+  }
+}
+
+@mixin browser-text-size($size) {
+  -webkit-text-size-adjust: $size;
+  -moz-text-size-adjust: $size;
+  -ms-text-size-adjust: $size;
+  text-size-adjust: $size;
+}
+
+@mixin browser-effects($attribute, $value) {
+  -webkit-#{$attribute}: #{$value};
+  -moz-#{$attribute}: #{$value};
+  -ms-#{$attribute}: #{$value};
+  #{$attribute}: #{$value};
+}
+
+@mixin browser-settings($attribute, $value) {
+  -webkit-#{$attribute}: #{$value};
+  -moz-#{$attribute}: #{$value};
+  -ms-#{$attribute}: #{$value};
+  -o-#{$attribute}: #{$value};
+  #{$attribute}: #{$value};
+}
+
+@mixin browser-transform($range) {
+ -webkit-transform: translateY($range);
+ -moz-transform: translateY($range);
+ -ms-transform: translateY($range);
+ -o-transform: translateY($range);
+ transform: translateY($range);
+}
+
+@mixin box-sizing( $type: border-box ) {
+  -webkit-box-sizing: $border-box;
+  -moz-box-sizing: $border-box;
+  -o-box-sizing: $border-box;
+  -ms-box-sizing: $border-box;
+  box-sizing: $border-box;
+}

@@ -1,0 +1,27 @@
+.module-send-customer {
+  background: none;
+  border: none;
+  color: $accent-dark;
+  font-size: 15px;
+  font-family: $font-family;
+  font-weight: 500;
+  bottom: 12px;
+  position: $default_position;
+  width: 100%;
+  left: 0;
+  height: 33px;
+  -webkit-tap-highlight-color: transparent; 
+}
+
+.module-disabled {
+  color: $grey-med; 
+}
+  
+.module-sendContainer {
+  width: 18%;
+  text-align: $text-align;
+  position: $default_position;
+  top: 6px;
+  bottom: 0;	
+  right: 0; 
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<html ng-app="chat" ng-controller="chatController as controller">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IS&T Help Line</title>
+<link rel="stylesheet" href="styles/css/css-reset.css">
+<link rel="stylesheet" href="styles/css/main.css"> 
+
+  </head>
+
+<body>
+    
+<div class="layout-wrapper"> 
+	<div class="module-chatContent">
+		<div ng-repeat="transcript in controller.transcripts track by $index" ng-class="{'welcome-text':$index == 0}">
+			<div ng-class="{'no-border':$index <= 1}">
+					<div ng-hide="$index == 0" ng-class="{'module-avator':$index > 0, 'module-avator-agent': transcript.by == 'agent', 'module-avator-customer': transcript.by == 'customer'}">
+							<span ng-bind-html="transcript.name.split(' ')[0] | limitTo:1"></span>
+							<span ng-bind-html="transcript.name.split(' ')[1] | limitTo:1"></span>
+					</div>		
+					<div ng-hide="transcript.class=='module-message-connected'">
+						<span class="module-person-name" ng-bind-html="transcript.name"></span>
+						<span class="module-timeStamp" ng-bind-html="transcript.time"></span>
+					</div>
+					<div ng-class="transcript.class" ng-bind-html="transcript.value" class="ng-binding"></div>
+			</div>
+		</div>
+		<div id="message-privacy" class="module-privacy-style" ng-show="controller.properties.showPrivacyMessage" ng-bind-html="controller.locale.privacy_message_text"></div>
+	</div>
+	
+	<div id="controls" class="module-controls" ng-show="controller.properties.showInputs">
+        
+		<textarea class="image-drop" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="showImagePreview" data-max-file-size="3" 
+		id="input-customer" class="input-customer" maxlength="600" ng-trim="false" maxlines="10" maxlines-prevent-enter="true" placeholder="Type your message" ng-model="customerMessage" ng-change="customerTyping()"></textarea>
+	
+		
+	
+		<div class="module-sendContainer">
+              <span class="default"></span>
+                  <button id="send-customer" ng-class="{'module-send-customer' : true, 'module-disabled': controller.properties.sendEnabled === 'disabled'}" ng-disabled="controller.properties.sendEnabled" ng-click="sendMessage()">Send</button>
+        </div>
+        
+		</div>
+	</div>
+    </div>
+</div>
+<script src="scripts/app.min.js"></script>
+
+</body>
+</html>

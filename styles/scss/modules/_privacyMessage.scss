@@ -1,0 +1,21 @@
+
+.module-message-connected {
+  @include calculateFont(0);
+  line-height: 16px;
+  padding: 20px 0 20px 0; 
+}
+
+// .module-privacy-style, 
+// .module-message-privacy, 
+// .module-privacy-position {
+.module-privacy-style {
+  font-size: 11px;
+  width: 290px;
+  bottom: 55px;
+  position: $default_position;
+  padding-bottom: 21px;
+  padding-left: 60px;
+  padding-right: 60px;
+  line-height: 16px;
+  text-align: $text-align;
+}
