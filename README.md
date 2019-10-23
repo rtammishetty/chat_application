@@ -1182,32 +1182,8 @@ Using navigator.userAgent
 Maps,  Classes,  Sub classes.
 etc…
 
-If variable value will change use  ‘let’  keyword,  If the value won’t change use  ‘const’  keyword.
 
 
-
-Callback functions
-‘this’ keyword
-Closure
-Functions
-Prototype based programming
-Prototypal inheritance
-OOJavascript
-RegEx
-Design patterns
-modern templating language best practices
-Browserify
-DOM API
-Junkins
-Virtual DOM
-Multiple API’s:  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
-Web Sockets: Continues streaming data
-Which form we get data from API
-How to parse data:   var myObject = JSON.parse(myjsonstring);
-Palindrome javascript: using for loop, using split method.
-tree structure in javascript classes / javascript tree data structure:  https://stackoverflow.com/questions/12036966/generic-tree-implementation-in-javascript 
-JSON.stringify, parse
-Event looping methods, bind( )
 
 
 
@@ -1244,6 +1220,90 @@ dependencies:  @angular/compiler-cli,  @angular/common,  @angular/router,  zone.
 
 
 
-3. Different SDLC
+3. Type Coercion
+Type coercion is the process of converting value from one type to another (such as string to number, object to boolean, and so on). Whenever possibile in your code use always the strict comparison operator = = = instead of = =
+Note: In JavaScript automagically converts any of the two operands to a string if at least one of them is… a string!
+
+Examples:
+True + false = 1;   false + false = 0;
+12 / “6” = 2;
+"number" + 15 + 3 = number153
+15 + 3 + "number" = 18number;
+[1] > null = true;
+"foo" + + "bar" = fooNaN
+'true' == true  // false
+false === 'false'  // false
+null == ' '  // false
+!!"false" == !!"true"  // true
+[‘x’] == ‘x’  // true
+[] + null + 1 = null1
+[1,2,3] == [1,2,3]  // false
+{}+[]+{}+[1] = 0[object Object]1;
+!+[]+[]+![] = truefalse;
+new Date(0) - 0 = 0;
+new Date(0) + 0 = Wed Dec 31 1969 19:00:00 GMT-0500 (Eastern Standard Time)0;
+'hello' + [89, 150.156, 'mike'] = hello89,150.156,mike;
+
+
+
+
+
+
+
+IIFE (Immediately Invoked Function Expression):
+1. An IIFE is a JavaScript function that runs as soon as it is defined.
+2. It is also known as "Self-Executing Anonymous Function" and contains two major parts.
+3. The first is the anonymous function with lexical scope enclosed within the Grouping Operator ( ). This prevents accessing variables within the IIFE idiom as well as polluting the global scope.
+4. The second part creates the immediately executing function expression ( ) through which the JavaScript engine will directly interpret the function.
+5. An Immediately Invoked Function Expression is a good way at protecting the scope of your function and the variables within it.
+6. IIFE functions are anonymous functions encapsulated in parentheses
+7. IIFE functions are called with the parameters immediately after the last parentheses enclosing the anonymous function
+8. IIFE functions are immediately invoked so cannot be called later
+9. IIFE functions can take in zero or any number of arguments
+(function addTogetheIIFEr() {
+  var x1 = 20;
+  var y1 = 20;
+  var answer1 = x1 + y1;
+  console.log('IIFE function: ' + answer1);
+})();
+
+(function (x) { return x * 2; } ) (2);
+
+
+
+
+JavaScript Anonymous Functions: function without a name.
+1.There are three main anonymous function declarations you will run into: Immediately Invoked Function Expression (IIFE), Assignment to Variable, and Anonymous Functions used as a parameter passed to another function
+
+
+
+
+Callback functions
+‘this’ keyword
+Closure
+Functions
+Prototype based programming
+Prototypal inheritance
+OOJavascript
+RegEx
+Design patterns
+modern templating language best practices
+Browserify
+DOM API
+Junkins, enum, eval, 
+Virtual DOM
+Multiple API’s:  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
+Web Sockets: Continues streaming data
+Which form we get data from API
+How to parse data:   var myObject = JSON.parse(myjsonstring);
+Palindrome javascript: using for loop, using split method.
+tree structure in javascript classes / javascript tree data structure:  https://stackoverflow.com/questions/12036966/generic-tree-implementation-in-javascript 
+JSON.stringify, parse
+Event looping methods, bind( )
+Package.json  vs  package-lock.json
+Pseudo elements, pseudo selectors
+addEvenyListner,
+anonymous functions
+IIFE
 
 
