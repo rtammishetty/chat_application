@@ -1,5 +1,3 @@
-# chat_application
-
 Javascript
 
 1.	use strict:
@@ -1305,5 +1303,141 @@ Pseudo elements, pseudo selectors
 addEvenyListner,
 anonymous functions
 IIFE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. How to share data between Components in Angular
+Parent to Child:
+1.	Sharing Data via @Input ( ) Decorators:
+If we want to pass data from the parent component to the child component, then we need to use two things: @Input ( ) and property binding.
+
+@Input () decorator to allow data to be passed via the template. 
+@Input () decorator provide a mechanism to allow a parent component to bind its properties to child component there by giving child access to its data. These binding should point to properties available in the parent component.
+// Parent Component
+import { Component, OnInit } from '@angular/core';
+@Component({
+  selector: 'app-parent-home',
+  template: `<p> parent-home works! </p>
+            <app-child-elder [childMessage1]="parentMessage"></app-child-elder>`,
+  styleUrls: ['./parent-home.component.css']
+})
+export class ParentHomeComponent implements OnInit {
+  parentMessage = "This is text is from ParentHomeComponent..!";
+  constructor() { }
+  ngOnInit() { }
+}
+
+
+// Child Component
+import { Component, OnInit, Input } from '@angular/core';
+@Component({
+  selector: 'app-child-elder',
+  templateUrl: `<div>
+                  <h4>ChildElderComponent Works..!</h4>
+                  <label><b>Message from ParentHomeComponent:</b> {{ childMessage1 }}</label>
+                </div>`,
+  styleUrls: ['./child-elder.component.css']
+})
+export class ChildElderComponent implements OnInit {
+  @Input() childMessage1: string;
+
+  constructor() { }
+  ngOnInit() { }
+}
+
+
+Child to Parent:
+a.	Sharing data via ViewChild ( ) Decorator:
+When we have to share data between Child to Parent Component, We will have to use ViewChild ( ) Decorator to get reference of the Child Component and get Datan from Child to Parent Component.
+One thing here is, you can get data from Child to Parent only after Child View is initialized. This means We need to implement the AfterViewInit lifecycle hook in the Parent Component to receive Data from Child.
+
+
+b.	Sharing data via Output ( ) Decorator and EventEmitter:
+With @Output ( ) and EventEmitter, we can emit Data back from Child Component to Parent Component. Child Component exposes an EventEmitetr property which emits data when an action / event happens at Child Component. Child Component’s EventEmitter property is an Output property, we mention it with @Output ( ) Decorator.
+
+Any communication:
+a.	Sibling Components Communication:
+Sibling Components can share Data between them using combination of above Parent to Child and Child to Parent relationship. Child1 sends Data to Parent and then Parent sends Data to Child2.
+
+
+
+b.	Sharing Data with a Service:
+When there no relationship between components that time, we need to use a Service to share Data between Components.
+We can use RxJS Subject for sharing Data via the Service.
+
+
+
+
+2. Difference between Component and Directive
+
+
+
+3. Component Life Cycle Hooks
+
+4. 
+
+5. 
+
+6. 
+
+7. 
+
+8. 
+
+9. 
+
+10. 
+
+11. 
+
+12. 
+
+13. 
+
+14. 
+
+15. 
+
+16. 
+
+17. 
+
+18. 
+
+19. 
+
+20. 
+
+
+
+
+
 
 
