@@ -1,1152 +1,937 @@
-Javascript
+// // events
+var btn = document.querySelector('button');
 
-1.	use strict:
-If you put "use strict"; at the top of your code (or function), then the JS is evaluated in strict mode and throws more errors and disables some features in an effort to make your code more robust, readable, and accurate.
-
-Advantages:
-
-It catches some common coding bloopers, throwing exceptions.
-It prevents, or throws errors, when relatively “unsafe” actions are taken (such as gaining access to the global object).
-It disables features that are confusing or poorly thought out.
-
-Not Allowed in Strict Mode
-Using a variable, without declaring it, is not allowed:
-Using an object, without declaring it, is not allowed:
-Deleting a function, variable (or object) is not allowed.
-Duplicating a parameter name is not allowed:  // function x(p1, p1) {};
-Octal numeric literals are not allowed:
-The string "eval" cannot be used as a variable:
-The string "arguments" cannot be used as a variable:
-
-As an example, in normal JavaScript, mistyping a variable name creates a new global variable. In strict mode, this will throw an error, making it impossible to accidentally create a global variable.
-
-In strict mode, any assignment to a non-writable property, a getter-only property, a non-existing property, a non-existing variable, or a non-existing object, will throw an error.
-
-
-2. Name spacing - 
-Name spacing is used for grouping the desired functions, variables etc. under a unique name. It is a name that has been attached to the desired functions, objects and properties. This improves modularity in the coding and enables code reuse. 
-
-    3. Closure — while execution
-A closure is an inner function that has access to the outer (enclosing) function’s variables—scope chain. The closure has three scope chains: it has access to its own scope (variables defined between its curly brackets), it has access to the outer function’s variables, and it has access to the global variables.
-
-The inner function has access not only to the outer function’s variables, but also to the outer function’s parameters. Note that the inner function cannot call the outer function’s arguments object, however, even though it can call the outer function’s parameters directly.
-
-You create a closure by adding a function inside another function.
-
-A Basic Example of Closures in JavaScript:
-
-function showName (firstName, lastName) {
-
-var  nameIntro = "Your name is ";
-// this inner function has access to the outer function's variables, including the parameter
-
-function makeFullName () {
-
-return  nameIntro + firstName + " " + lastName;  
+function random(number) {
+    console.log('random number: ' + Math.floor(Math.random()*number));
+  return Math.floor(Math.random()*(number));
 }
 
-return makeFullName ();
+// btn.onclick = function() {
+//   var rndCol = 'rgb(' + random(255) + ',' + random(255) + ',' + random(255) + ')';
+//   console.log('new color: ' + rndCol);
+//   btn.style.backgroundColor = rndCol;
+// }
+
+function bgChange() {
+    var rndCol = 'rgb(' + random(255) + ',' + random(255) + ',' + random(255) + ')';
+    btn.style.backgroundColor = rndCol;
 }
-showName ("Michael", "Jackson"); // Your name is Michael Jackson
+btn.addEventListener('click', bgChange);
+btn.removeEventListener('click', bgChange);
 
 
 
 
-3.Undefined / Null / Not defined:
+// event bubbling
+var evtBtn = document.getElementById('evtBubblingBtn');
+var evtDiv = document.getElementById('evtBubblingDiv');
+var evtSpan = document.getElementById('evtBubblingSpan');
 
-4. Datatypes — Number, Boolean, String, Object, Null, Undefined and Function.
-
-5. isNaN — isNaN returns true if the argument is not a number, otherwise it is false.
-
-6.Negative infinity — Negative infinity is a number in Javascript which can be derived by dividing negative number by zero.
-
-7.How to break JavaScript code into several lines — Breaking within a string statement can be done by the use of a backslash, ‘\’, at the end of the first line. And if you change to a new line when not within a string statement, then javaScript ignores break in line.
-
-8.Undeclared variables — undeclared variables are those that do not exist in a program and are not declared. If the program tries to read the value of an undeclared variable, then a runtime error is encountered. 
-
-9.Undefined variables — undefined variables are those that are declared in the program but have not been given any value. If the program tries to read the value of an undefined variable, an undefined value is returned.
-
-
-
-
-10. Global variables — Global variables are those that are available throughout the length of the code, that is, these have no scope. The var keyword is used to declare a local variable or object. If the var keyword is omitted, a global variable is declared.
-Example: // Declare a global globalVariable = "Test"; The problems that are faced by using global variables are the clash of variable names of local and global scope. Also, it is difficult to debug and test the code that relies on global variables.
-
-
-11. Prompt box — a prompt box is a box which allows the user to enter input by providing a text box. Label and box will be provided to enter the text or number.
-
-
-12. this keyword — 
-In Simple Function Call:  'this' is the global object in non-strict mode, and undefined in strict mode.
-Note: Variables stored with 'let', 'const' at the global level are not stored in the global object, instead it stores in an inaccessible declarative environment record.
-Implicit Binding: 'this' points to the object on which the function is called.
-Explicit Binding: We can explicitly tell the JavaScript engine to set 'this' to point to a certain value using call, apply or bind. Both 'call' and 'apply' can be used to invoke a function with a specific value for 'this'.
-new Binding:  Using the ‘new’ keyword constructs a new ‘object’ and ‘this’ points it
-
-// Simple function call
-function ghost() {  console.log(this.boo);  }
-ghost(); // undefined
-var boo = '👻';;
-ghost(); // 👻 // In strict mode we will get Uncaught TypeError: Cannot read property 'boo' of undefined
-
-function ghost() {  console.log(this.boo);  }
-ghost(); // undefined
-let boo = '👻';
-ghost(); // undefined
-window.boo = '👻';
-ghost(); // 👻
-
-// Implicit binding
-let myGhost = {
-  name: 'Casper',
-  boo: '👻 Boo!!',
-  ghost: function () {
-    console.log(this.boo); // 👻 Boo!!
-    // console.log(boo); // Uncaught ReferenceError: boo is not defined
-  }
-} myGhost.ghost(); // 👻 Boo!!
-
-
-
-// Explicit binding
-function ghostCall() {  console.log(this.boo);  }
-let myGhost = {
-  name: 'Casper',
-  boo: '👻 Boo!!',
+evtBtn.onclick = function() {
+    evtDiv.style.visibility = 'visible';
 }
-ghostCall.call(myGhost); // 👻 Boo!!
 
-function ghostBind() {  console.log(this.boo);  }
-let myFavGhost = {
-  name: 'Casper',
-  boo: '👻 Boo!!',
+evtDiv.onclick = function() {
+    evtDiv.style.visibility = 'hidden';
 }
-ghostBind.bind(myFavGhost)();  // use this line or below two lines
-ghostSign = ghostBind.bind(myFavGhost)
-ghostSign(); // 👻 Boo!!
 
+evtSpan.onclick = function() {
+    console.log('event bubbling happens..!');
+}
 
 
-// ‘new’ Binding
-function ghostNew(name) {  this.name = name  }
-let thisGhostNew = new ghostNew ('Casper is a friendly good ghost..!');
-console.log(thisGhostNew.name);
 
 
+// Toggle functionality
+function toggleDiv() {
+    let showHideDivJS = document.getElementById('toggleDivJS');
+    if(showHideDivJS.style.display==='none' || showHideDivJS.style.display==='') {
+        showHideDivJS.style.display = 'block'
+    } else {
+        showHideDivJS.style.display = 'none'
+    }
+}
 
+// event Listner
+let showHideDivEvtListnr = document.getElementById('toggleDivEvtListnr'); 
+let evtListnrButtonVar = document.getElementById('evtListnrButton');
 
-
-
-13. Timers — Timers are used to execute a piece of code at a set time or also to repeat the code in a given interval of time. This is done by using the functions setTimeout, setInterval and clearInterval. 
-The setTimeout(function, delay) function is used to start a timer that calls a particular function after the mentioned delay.
-The setInterval(function, delay) function is used to repeatedly execute the given function in the mentioned delay and only halts when cancelled.
-The clearInterval(id) function instructs the timer to stop. 
-Timers are operated within a single thread, and thus events might queue up, waiting to be executed. 
-
-
-15. View state  vs  Session state — ‘ViewState’ is specific to a page in a session. 
- ‘SessionState’ is specific to user specific data that can be accessed across all pages in the web application. 
-
-
-16. == vs === operator — “==” checks only for equality in value whereas “===” is a stricter equality test and returns false if either the value or the type of the two variables are different.
-
-17. form submit — To submit a form using JavaScript use document.form[0].submit(); 
-
-18. Automatic type conversion — Yes JavaScript does support automatic type conversion, it is the common way of type conversion used by JavaScript developers.
-
-19. Read and Write a file — There are two ways to read and write a file using JavaScript 
-1. Using JavaScript extensions
-2. Using a web page and Active X objects 
-
-
-20. Loops — for, while and do-while.
-
-21. Variable typing — Variable typing is used to assign a number to a variable and the same variable can be assigned to a string.
-
-22. How to convert string to integer — The parseInt() function is used to convert numbers between different bases. parseInt() takes the string to be converted as its first parameter, and the second parameter is the base of the given string.
-
-23. Detect OS on client machine — navigator.appVersion string 
-
-24. Null — The NULL value is used to represent no value or no object. It implies no object or null string, no valid Boolean value, no number and no array object. 
-
-25. Delete operator — the functionality of delete operator is used to delete all variables and objects in a program but it cannot delete variables declared with VAR keyword. 
-
-26. Alert boxes — Alert, Confirm and Prompt.
-
-27. Void(0) — Void(0) is used to prevent the page from refreshing and parameter "zero" is passed while calling. 
-Void(0) is used to call another method without refreshing the page.
-
-28. Datatype of a variable — Object
-
-29. Alert box vs Confirmation box — an alert box displays only one button which is the OK button. But a Confirmation box displays two buttons namely OK and cancel. 
-
-30. Escape characters — Escape characters (Backslash) is used when working with special characters like single quotes, double quotes, apostrophes and ampersands. Place backslash before the characters to make it display. 
-
-31. Cookies — Cookies are the small test files stored in a computer and it gets created when the user visits the websites to store information that they need. Example could be User Name details and shopping cart information from the previous visits.
-
-32. Pop() — The pop() method is similar as the shift() method but the difference is that the Shift method works at the start of the array. Also the pop() method take the last element off of the given array and returns it. The array on which is called is then altered.
-Example:  var cloths = ["Shirt", "Pant", "TShirt"]; cloths.pop();//Now cloth becomes Shirt,Pant
- 
-33. Concept level scope — no. JavaScript does not have concept level scope. The variable declared inside the function has scope inside the function.
-
-34. Disadvantage of innerHTML — Content is replaced everywhere. We cannot use like “appending to innerHTML” Even if you use +=like “innerHTML = innerHTML + ‘html’” still the old content is replaced by html.
- 
-The entire innerHTML content is re-parsed and build into elements, therefore its much slower
-The innerHTML does not provide validation and therefore we can potentially insert valid and broken HTML in the document and break it.
-
-34. Break vs Continue — Break statement exits from the current loop.
-        Continue statement continues with next statement of the loop.
-
-35. Datatypes — Primitive: Number and Boolean.
-  Reference: Strings, Dates etc.
-
-36. typeOf operator — To return a string description of the type of a variable, we normally use typeOf operator.
-
-37. Exception handling — Try... Catch---finally is used to handle exceptions in the JavaScript.
-
-38. Print text in screen — document.write(“Welcome”) is used to print the text – Welcome in the screen.
-
-39. Blur — Blur function is used to remove the focus from the specified object.
-
-40. Errors — Load time errors: Errors which come up when loading a web page like improper syntax errors are known as Load time errors and it generates the errors dynamically.
-          Run time errors: Errors that come due to misuse of the command inside the HTML language. 
-                       Logical Errors: These are the errors that occur due to the bad logic performed on a function which is having different operation.
-
-41. Push() — The push method is used to add or append one or more elements to the end of an Array. Using this method, we can append multiple elements by passing multiple arguments.
-
-42. Unshift() — Unshift method is like push method which works at the beginning of the array. This method is used to prepend one or more elements to the beginning of the array.
-
-43. Strict mode — Strict Mode adds certain compulsions to JavaScript. Under the strict mode, JavaScript shows errors for a piece of codes, which did not show an error before, but might be problematic and potentially unsafe. Strict mode also solves some mistakes that         hamper the JavaScript engines to work efficiently. 
-Strict mode can be enabled by adding the string literal “use strict” above the file.
-
-44. Checkbox — The status can be acquired as follows - 
-alert(document.getElementById('checkbox1').checked); 
-If the CheckBox will be checked, this alert will return TRUE.
-
-45. window.onload vs onDocumentReady — The onload function is not run until all the information on the page is loaded. This leads to a substantial delay before any code is executed. 
-onDocumentReady loads the code just after the DOM is loaded. This allows early manipulation of the code.
-
-46. Append value to an array — arr[arr.length] = value;
-Array.push(“someValue”);
-
-47. Loops
-
-
-48. Anonymous function — A function that is declared without any named identifier is known as an anonymous function. In general, an anonymous function is inaccessible after its declaration.
-
-49. .call()  vs  .apply()  — The function .call() and .apply() are very similar in their usage except a little difference. 
-.call( ) is used when the number of the function’s arguments are known to the programmer, as they have to be mentioned as arguments in the call statement. 
-On the other hand, .apply( ) is used when the number is not known. The function .apply() expects the argument to be an array. 
-The basic difference between .call() and .apply() is in the way arguments are passed to the function.
-The only difference is:
-call() takes any function arguments separately.
-apply() takes any function arguments as an array.
-
-50. Event bubbling and Event capturing — JavaScript allows DOM elements to be nested inside each other. In such a case, if the handler of the child is clicked, the handler of parent will also work as if it were clicked too.  // When an event happens on an element, it first runs the handlers on it, then on its parent, then all the way up on other ancestors.
-
-The event propagation can be stopped in any listener by invoking the stopPropagation method of the event object.
-A bubbling event goes from the target element straight up. Normally it goes upwards till <html>, and then to document object, and some events even reach window, calling all handlers on the path.
-But any handler may decide that the event has been fully processed and stop the bubbling.
-The method for it is event.stopPropagation().
-For instance, here body.onclick doesn’t work if you click on <button>:
-
-<body onclick="alert(`the bubbling doesn't reach here`)">
-  <button onclick="event.stopPropagation()">Click me</button>
-</body>
-
-
-
-event.stopImmediatePropagation()
-If an element has multiple event handlers on a single event, then even if one of them stops the bubbling, the other ones still execute.
-In other words, event.stopPropagation() stops the move upwards, but on the current element all other handlers will run.
-To stop the bubbling and prevent handlers on the current element from running, there’s a method event.stopImmediatePropagation(). After it no other handlers execute.
-event.target
-A handler on a parent element can always get the details about where it actually happened. The most deeply nested element that caused the event is called a target element, accessible as event.target.
-
-Capturing
-There’s another phase of event processing called “capturing”. It is rarely used in real code, but sometimes can be useful.
-The standard DOM Events describes 3 phases of event propagation:
-•	Capturing phase – the event goes down to the element.
-•	Target phase – the event reached the target element.
-•	Bubbling phase – the event bubbles up from the element.
-That is: for a click on <td> the event first goes through the ancestors chain down to the element (capturing), then it reaches the target, and then it goes up (bubbles), calling handlers on its way.
-Before we only talked about bubbling, because the capturing phase is rarely used. Normally it is invisible to us.
-Handlers added using on<event>-property or using HTML attributes or using addEventListener(event, handler) don’t know anything about capturing, they only run on the 2nd and 3rd phases.
-To catch an event on the capturing phase, we need to set the handler capture option to true:
-elem.addEventListener(..., {capture: true})
-// or, just "true" is an alias to {capture: true}
-elem.addEventListener(..., true)
-
-There are two possible values of the capture option:
-•	If it’s false (default), then the handler is set on the bubbling phase.
-•	If it’s true, then the handler is set on the capturing phase.
-
-Example: 
-<form>FORM<div>DIV<p>P</p></div></form>
-
-for(let elem of document.querySelectorAll('*')) {
-    elem.addEventListener("click", e => alert(`Capturing: ${elem.tagName}`), true);
-    elem.addEventListener("click", e => alert(`Bubbling: ${elem.tagName}`));
-  }
-
-51. Case sensitive — Yes
-
-52. Boolean operators — The ‘And’ Operator (&&), ‘Or’ Operator (||) and the ‘Not’ Operator (!) can be used in JavaScript.
-
-53. DOM utilization — DOM stands for Document Object Model and is responsible for how various objects in a document interact with each other. DOM is required for developing web pages, which includes objects like paragraph, links, etc. These objects can be operated to include actions like add or delete. DOM is also required to add extra capabilities to a web page. On top of that, the use of API gives an advantage over other existing models.
-
-54. Event handlers — Events are the actions that result from activities, such as clicking a link or filling a form, by the user. An event handler is required to manage proper execution of all these events. Event handlers are an extra attribute of the object. This attribute 
-  includes event’s name and the action taken if the event takes place.
-
-55. Deferred scripts — By default, the parsing of the HTML code, during page loading, is paused until the script has not stopped executing. It means, if the server is slow or the script is particularly heavy, then the webpage is displayed with a delay. While using Deferred, 
-    scripts delays execution of the script till the time HTML parser is running. This reduces the loading time of web pages and they get displayed faster.
-56. Functional components — First-class functions: Functions in JavaScript are utilized as first class objects. This usually means that these functions can be passed as arguments to other functions, returned as values from other functions, assigned to variables or can       also be stored in data structures. 
-      Nested functions: The functions, which are defined inside other functions, are called Nested functions. They are called ‘everytime’ the main function is invoked.
-
-57. Screen objects — Screen objects are used to read the information from the client’s screen. The properties of screen objects are - 
-  AvalHeight: Gives the height of client’s screen
-  AvailWidth: Gives the width of client’s screen.
-  ColorDepth: Gives the bit depth of images on the client’s screen
-  Height: Gives the total height of the client’s screen, including the taskbar Width: Gives the total width of the client’s screen, including the taskbar.
-58. Unshift() — This method is functional at the starting of the array, unlike the push(). It adds the desired number of elements to the top of an array.
-
-59. escape()  vs  unescape  — escape () function is responsible for coding a string so as to make the transfer of the information from one computer to the other, across a network.
-unescape() function is very important as it decodes the coded string.
-
-60. decodeURL()  vs  encodeURL  — EncodeURl() is used to convert URL into their hex coding. And DecodeURI() is used to convert the encoded URL back to normal.
-
-
-61. Javascript  vs  ECMAScript  — ECMAScript is nothing but another name for JavaScript. Precisely, ECMAScript is the formal name of JavaScript, when XML elements have to be accessed.
-
-62. Namespacing — Namespacing is used for grouping the desired functions, variables etc. under a unique name. It is a name that has been attached to the desired functions, objects and properties. This improves modularity in the coding and enables code reuse. 
-
-63. Arrays — An array is a special variable, which can hold more than one value at a time. Arrays are a special type of objects. The typeof operator in JavaScript returns "object" for arrays.
-We use indexOf to find the index of an value. If the value is not available in array then indexOf returns -1.
-
-Unshift adds an element at begging of an array.
-Pop removes last element from array.
-Ex: var cars = ["Saab", "Volvo", "BMW"];
-
-64. Arrays vs Objects — In JavaScript, arrays use numbered indexes (Order matters).  
-    In JavaScript, objects use named indexes.
-Object has key value pairs and order is not a matter.
-Both can hold different type of data.
-Object can hold array type, function also.
-
-65. If an array with name as "names" contain three elements, then how will you print the third element of this array?
-Print third array element document.write(names[2]);
-Note:- Array index starts with 0.
-
-66. How do you submit a form using JavaScript — Use document.forms[0].submit();
-
-67. How do you change the style/class on any element using JavaScript? 
-      document.getElementById(“myText”).style.fontSize = “10";
-      document.getElementById(“myText”).className = “anyclass”;
-
-68. Hoisting — Hoisting is JavaScript's default behavior of moving all declarations to the top of the current scope (to the top of the current script or the current function).
-  In JavaScript, a variable can be declared after it has been used. In other words; a variable can be used before it has been declared.
-                 When you declare a variable inside of a function, the variable declaration is “hoisted” to the top of the function. That is, the runtime will move your variable declaration to the beginning of the function, in spite of where you put the var statement.
-  Because of this hoisting, it is recommended that you put variable declarations at the top of the function. It will happen for you anyways, so you may as well do this explicitly in order to prevent confusion about the code’s execution.
-
-69. Variable scoping — the current, ES5 version of JavaScript only has two scopes for variables: function scope and global scope.
-By using a var statement inside of a function, you are using a function-scoped variable, as is show in the example above. 
-In a browser, if you omit the var statement, or if you use var outside of any function, you will attach to the current global scope.
-A variable’s scope is the context in which the variable exists. The scope specifies from where you can access a variable and whether you have access to the variable in that context. Variables have either a local scope or a global scope.
- 
-JavaScript has two scopes: global and local. A variable that is declared outside a function definition is a global variable, and its value is accessible and modifiable throughout your program. A variable that is declared inside a function definition is local. It is created and destroyed every time the function is executed, and it cannot be accessed by any code outside the function. JavaScript does not support block scope (in which a set of braces {. . .} defines a new scope), except in the special case of block-scoped variables.
-https://msdn.microsoft.com/library/bzt2dkta(v=vs.94).aspx
-
-
-
-70. ES6 Features — ES6 introduces language support for classes (class keyword), constructors (constructor keyword), and the extend keyword for inheritance.
-
-Functions: Arrow functions provide two features: lexical scoping of this keyword and less ceremony when defining an anonymous function. Without arrow functions, every function defines a this value.
-Modules: 
-Block Scoping: Scoping in JavaScript is confusing for developers with a C/C#/Java background.  Hoisting can add to that confusion.  In ES5, variables are either globally or locally function scoped.  The lack of block scoping has caused confusion in     ES5, and resulted in some interesting patterns to achieve block scope.  In ES6, you can use the new let keyword to achieve block scoping.
-Promises: Promises handles the results and errors from asynchronous operations.  You can accomplish the same thing with callbacks, but promises provide improved readability via method chaining and succinct error handling.  Promises are currently used in many JavaScript libraries.  RSVP.js, Q.js, and the $q service in Angular are just a few of many examples.
-FYI:  http://www.wintellect.com/devcenter/nstieglitz/5-great-features-in-es6-harmony
-
-
-
-
-
-
-71. Modularity — Modules have the potential to radically change how many JavaScript applications are structured and standardize a best practice in some already modular applications.  Modules in ES6 provide a way to load and manage dependencies via the new import and export keywords.  There are a few good solutions in ES5, namely 3rd party libraries like CommonJS or node modules.  Modularity is such an important concept for large applications, that it makes sense to include it as a core language feature.  
-The goals are
-⁃
-Obviate need for globals
-⁃
-Orthogonality from existing features
-⁃
-Smooth refactoring from global code to modular code
-⁃
-Smooth interoperability with existing JS module systems like AMD, CommonJS, and Node.js
-⁃
-Fast compilation
-⁃
-Simplicity and usability
-⁃
-Standardized protocol for sharing libraries
-⁃
-Compatibility with browser and non-browser environments
-⁃
-Easy asynchronous external loading
-
-
-72. Debugging — Chrome Dev Tool, Firefox Firebug, Safari Firebug, In IE8, you can use the built-in Developer Tools.
-Ways to do: console.log(); , Setting break points, debugger keyword in JS code.
-Searching for errors in programming code is called code debugging. Debugging is not easy. But fortunately, all modern browsers have a built-in debugger.
-With a debugger, you can also set breakpoints (places where code execution can be stopped), and examine variables while the code is executing.
-
-
-73. HTTP Methods — 
-
-Method	Description
-GET	
-POST	
-HEAD	Same as GET but returns only HTTP headers and no document body
-PUT	Uploads a representation of the specified URI
-DELETE	Deletes the specified resource
-OPTIONS	Returns the HTTP methods that the server supports
-CONNECT	Converts the request connection to a transparent TCP/IP tunnel
-
-
-
-
-
-GET METHOD	POST METHOD
-Requests data from a specified resource	Submits data to be processed to a specified resource
-GET requests can be cached	POST requests are never cached
-GET requests remain in the browser history.
-
-Parameters remain in browser history because they are part of the URL.	POST requests do not remain in the browser history
-Parameters are not saved in browser history.
-GET requests can be bookmarked	POST requests cannot be bookmarked
-GET requests should never be used when dealing with sensitive data	
-GET requests have length restrictions.
-Yes, since form data is in the URL and URL length is restricted. A safe URL length limit is often 2048 characters but varies by browser and web server.	POST requests have no restrictions on data length
-GET requests should be used only to retrieve data	
-Only ASCII characters allowed	No restrictions. Binary data is also allowed
-	
-GET is less secure compared to POST because data sent is part of the URL
-
-Never use GET when sending passwords or other sensitive information!	POST is a little safer than GET because the parameters are not stored in browser history or in web server logs
-Data is visible to everyone in the URL	Data is not displayed in the URL
-	
-BACK button/Reload
-Harmless can send but the parameter data is limited to what we can stuff into the request line (URL). Safest to use less than 2K of parameters, some servers handle up to 64K	BACK button/Reload
-Data will be re-submitted (the browser should alert the user that the data are about to be re-submitted)
-
-Can send parameters, including uploading files, to the server.
-Security:
-GET is less secure compared to POST because data sent is part of the URL. So it's saved in browser history and server logs in plaintext.	Security:
-POST is a little safer than GET because the parameters are not stored in browser history or in web server logs.
-Visibility:
-GET method is visible to everyone (it will be displayed in the browser's address bar) and has limits on the amount of information to send.	Visibility:
-POST method variables are not displayed in the URL.
-GET method should not be used when sending passwords or other sensitive information.	POST method used when sending passwords or other sensitive information.
-
-Get vs POST
-GET is simpler and faster than POST, and can be used in most cases.
-However, always use POST requests when:
-•
-A cached file is not an option (update a file or database on the server).
-•
-Sending a large amount of data to the server (POST has no size limitations).
-•
-Sending user input (which can contain unknown characters), POST is more robust and secure than GET.
-
-
-To make an AJAX request follow the below steps:
-To avoid this, add a unique ID to the URL and If you want to send information with the GET method, add the information to the URL.
-Ex:
-xhttp.open("GET", "demo_get2.asp?fname=Henry&lname=Ford", true);
-xhttp.send();
-
-xhttp.open("POST", "ajax_test.asp", true);
-xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-xhttp.send("fname=Henry&lname=Ford");
-
-
-Method	Description
-open(method, url, async)	Specifies the type of request
-
-method: the type of request: GET or POST
-url: the server (file) location
-async: true (asynchronous) or false (synchronous)
-send()	Sends the request to the server (used for GET)
-send(string)	Sends the request to the server (used for POST)
-setRequestHeader(header, value)	Adds HTTP headers to the request
-
-header: specifies the header name
-value: specifies the header value
-
-
-
-
-
-
-74. Asynchronous vs Synchronous — 
-Asynchronous - True or False?
-AJAX stands for Asynchronous JavaScript and XML, and for the XMLHttpRequest object to behave as AJAX, the async parameter of the open() method has to be set to true:
-xhttp.open("GET", "ajax_test.asp", true);
-Sending asynchronous requests is a huge improvement for web developers. Many of the tasks performed on the server are very time consuming. Before AJAX, this operation could cause the application to hang or stop.
-With AJAX, the JavaScript does not have to wait for the server response, but can instead:
-⁃
-execute other scripts while waiting for server response
-⁃
-deal with the response when the response ready
-
-Async=true
-When using async=true, specify a function to execute when the response is ready in the onreadystatechange event:
-Example
-  var xhttp = new XMLHttpRequest( )
-  xhttp.onreadystatechange = function() {
- 
-    if (xhttp.readyState == 4 && xhttp.status == 200) {
- 
-      document.getElementById("demo").innerHTML = xhttp.responseText;
- 
-   }
-};
-xhttp.open("GET", "ajax_info.txt", true);
-xhttp.send();
-
-Async=false
-To use async=false, change the third parameter in the open() method to false:
-xhttp.open("GET", "ajax_info.txt", false);
-Using async=false is not recommended, but for a few small requests this can be ok.
-Remember that the JavaScript will NOT continue to execute, until the server response is ready. If the server is busy or slow, the application will hang or stop.
-Note: When you use async=false, do NOT write an onreadystatechange function - just put the code after the send() statement:
-Example
-xhttp.open("GET", "ajax_info.txt", false);
-xhttp.send();
-document.getElementById("demo").innerHTML = xhttp.responseText;
-
-
-
-
-
-
-
-75. Status codes — 
-
-CONSTANT	CODE	MESSAGE
-CREATED	201	Created
-ACCEPTED	202	Accepted
-NO_CONTENT	204	No content
-BAD_GATEWAY	502	Bad gateway
-BAD_REQUEST	400	Bad request
-CONTINUE	100	Continue
-FORBIDDEN	403	Forbidden
-GATEWAY_TIMEOUT	504	Gateway timeout
-HTTP_VERSION_NOT_SUPPORTED	505	HTTP Version not supported
-INTERNAL_SERVER_ERROR	500	Internal server error
-NOT_FOUND	404	Not found
-
-
-
-76. Inheritance — Javascript follows Prototype-Based inheritance. That means that there are no classes. Instead, an object inherits from another object
-http://javascript.info/tutorial/inheritance
-
-77. Functions — 
-
-78. AJAX: AJAX is about updating parts of a web page, without reloading the whole page.
-The XMLHttpRequest object is used to exchange data with a server behind the scenes. This means that it is possible to update parts of a web page, without reloading the whole page.
-
-79. Asynchronous — It does not have to wait for the Server response. Instead of that, It executes other scripts while waiting for server response and it deals with the response when it is ready.
-
-To send a request to a server, we use the open() and send() methods of the XMLHttpRequest object:
-
-send()  — Sends the request to the server (used for GET)
-send(string)  — Sends the request to the server (used for POST)
-
-xhttp.open("GET", "ajax_test.asp", true);
-Here:    Method : GET
-UrL : ajax_test.asp
-Async : true
-
-
-
-
-80. Namespace
-Namespacing is used for grouping the desired functions, variables etc. under a unique name. It is a name that has been attached to the desired functions, objects and properties. This improves modularity in the coding and enables code reuse. 
-
-81. Constructor - constructor([arguments]) { ... }
-Constructor is a special method for creating and initializing an object created within a class.
-•	There can be only one constructor method in a class. If we create more than one constructor methods in a class will throw a SyntaxError error.
-•	It usually has the same name as the class containing it.
-•	Constructor can use super keyword to call the constructor of a parent class.
-•	If we don’t specify a Constructor method, default constructor is used -  constructor() {}
-
-
-82. Call back functions — A function that is passed to another function as a parameter and the callback function is called/executed inside another function.
-In other words -  In Javascript, Functions are Objects. Because of this, functions can take functions as arguments, and can be returned by another functions. Any function that is passed as an argument is called a callback function.
-
-Scenario: When you make requests to an API, you have to wait for the response before you can act on that response. This is a wonderful example of a real-world callback.
-
-
-
-
-var friends = ["Mike", "Stacy", "Andy", "Rick"];
-friends.forEach(function (eachName, index){
-    
-  console.log(index + 1 + ". " + eachName); // 1. Mike, 2. Stacy, 3. Andy, 4. Rick 
+evtListnrButtonVar.addEventListener('click', function() {
+    if(showHideDivEvtListnr.style.display==='none' || showHideDivEvtListnr.style.display==='') {
+        showHideDivEvtListnr.style.display = 'block'
+    } else {
+        showHideDivEvtListnr.style.display = 'none'
+    } 
 });
-Again, note the way we pass an anonymous function (a function without a name) to the forEach method as a parameter. Here we have passed anonymous functions as a parameter to other functions or methods.
 
 
+// IIFE Immediately Invoked Function Expression also called Self Executing Anonymous Function
+// Anonymous function with Lexical scope enclosed within the ()
+// Prevents accessing variables within the IIFe as well as polluting global scope.
+(function() {
+    var flashName = 'Barry Allen';
+})();
+// console.log('accessing IIFE variable from outside: ' + flashName);  // not defined
 
-Example:
-function greeting(name) {
-  alert('Hello ' + name);
-}
+var iifeResult = (function() {
+    var captainMarvel = 'Carole Danvers';
+    return captainMarvel;
+})();
+console.log('IIFE function expression: ' + iifeResult);  // not defined
 
-function processUserInput(callback) {
-  var name = prompt('Please enter your name.');
-  callback(name);
-}
 
-processUserInput(greeting);
 
+// closures
+/*
+A closure is a function defined inside another function (called the parent function), and has access to variables that are declared and defined in the parent function scope.
 
-Ex2:
-Function startPlaying(game, callback) {
-    Console.log(` Started playing ${game} today. `);
-    Callback();
-}
-Function finishPlaying() {
-    Console.log(` Finished playing ${game} today. `);
-}
+The closure has access to variables in three scopes:
 
-startPlaying(‘Football’, finishPlaying);
+Variables declared in their own scope
+Variables declared in a parent function scope
+Variables declared in the global namespace
+*/
 
+/*
+In JavaScript, a function defined inside another one has access to the outer function's variables. Therefore, a function is a first-class object that can be returned by other functions as well and be passed as an argument in another function.
 
-
-
-83. Design patterns — A design pattern is a reusable solution to a commonly occurring problem in software design.
-
-Design patterns are usually categorized into three major groups.
-Creational Design Patterns: These patterns are for handling object creational mechanisms. A creational design pattern basically solves a problem by controlling the creation process of an object.
-Ex: Constructor Pattern, Factory Pattern, Prototype Pattern, and Singleton Pattern.
-
-Structural Design Patterns: These patterns are concerned with class and object composition. They help structure or restructure one or more parts without affecting the entire system. In other words, they help obtain new functionalities without tampering with the existing ones.
-Ex: Adapter Pattern, Composite Pattern, Decorator Pattern, Façade Pattern, Flyweight Pattern, and Proxy Pattern.
-
-Behavioral Design Patterns: These patterns are concerned with improving communication between dissimilar objects.
-Ex: Chain of Responsibility Pattern, Command Pattern, Iterator Pattern, Mediator Pattern, Observer Pattern, State Pattern, Strategy Pattern, and Template Pattern.
-
-Key Points:
-Context: Where/under what circumstances is the pattern used?
-Problem: What are we trying to solve?
-Solution: How does using this pattern solve our proposed problem?
-Implementation: What does the implementation look like?
-Refer:  https://medium.com/better-programming/javascript-design-patterns-25f0faaaa15 
-
-
-
-Types of Design Patterns are:  Module, Prototype, Observer, Singleton.
-Module Design Pattern — JavaScript modules are the most common used design patterns for keeping pieces of code independent of other components. This provides loose coupling to support well-structured code.
-
-Refer: https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know 
-
-
-
-
-
-
-
-84. Parameters
-Parameters are variables listed as a part of the function definition. 
-
-
-85. Arguments
-Arguments are the values passed to the function when it is invoked.
-var parameter1, parameter2, parameter3;
-
-function argCheck( parameter1, parameter2, parameter3 ){
-  console.log(parameter1 + parameter2 + parameter3);
-}
-argCheck(1,2,3,4);  // ignores the last argument.
-
-argCheck(1,5)  // missing arguments will give NaN because by default if a corresponding argument is missing, it is set to undefined
-
-
-
-
-
-86. Function statement & Function expression
-Expression produces a value(out come), where as a statement performs an action.
-
- 
-
-87. AJAX - Server Response
-
-The readyState property holds the status of the XMLHttpRequest.
-The onreadystatechange property defines a function to be executed when the readyState changes.
-The status property and the statusText property holds the status of the XMLHttpRequest object.
-
-readyState
-Holds the status of the XMLHttpRequest. 
-0: request not initialized 
-1: server connection established
-2: request received 
-3: processing request 
-4: request finished and response is ready
-
-status
-200: "OK"
-403: "Forbidden"
-404: "Page not found"
-etc...
-
-
-function loadDoc() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("demo").innerHTML =
-            this.responseText;
-        }
-    };
-    xhttp.open("GET", "ajax_info.txt", true);
-    xhttp.send();
-}
-
-
-
-
-
-88. Event looping in Javascript
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop
-https://hackernoon.com/understanding-js-the-event-loop-959beae3ac40
-https://flaviocopes.com/javascript-event-loop/
-
-
-
-
-89.  .call()  vs  .bind()  vs  .apply()
-.call()
-Let’s say that we have an object called obj. It only has one property called things, which has a value of 3. Totally unrelated to this object, let’s also make a function called addThings.
-let obj = {things: 3};
-let addThings = function(a, b, c){
- return this.things + a + b + c;
-};
-Notice this.things. Why does the addThings function mention that, when it doesn’t even have things? We need to pass it a context. We can do that with call. If we were to run this code:
-console.log( addThings.call(obj, 1,4,6) );  // 14
-That’s because the first parameter that call takes, is the context we want “this” to refer to. We passed it obj, which does have the things property. After we pass the context, we can pass the arguments like we usually would. In this case we passed 1, 4, 6. So this line:
-return this.things + a + b + c;     would be populated this way:     return 3 + 1 + 4 + 6;
-
-
-
-apply() 
-Apply is so similar to call that I don’t personally see its value. Pun intended.
-The main difference is the way we can pass arguments. We can pass them as an array. Clear the previous code from your mind and let’s start over.
-let obj = {things: 3};
-let addThings = function(a, b, c){
- return this.things + a + b + c;
-};
-let arr = [1,4,6];
-console.log( addThings.apply(obj, arr) );
-
-
-
-bind()
-This is the easiest and quick method to bind events. But the issue with bind() is that it doesn't work for elements added dynamically that matches the same selector. bind() only attach events to the current elements not future element. Above that it also has performance issues when dealing with a large selection.
-
-let obj = {things: 3};
-let addThings = function(a, b, c){
- return this.things + a + b + c;
-};
-console.log( addThings.bind(obj, 1,4,6) );
-We expected the number 14, but that didn’t work. Instead, it returned a function. Bind works by returning a copy of the function, but with a different context. We passed obj as the context, but we didn’t execute it. Let’s try that:
-console.log( addThings.bind(obj, 1,4,6)() );
-That worked! We can also pass the arguments like this:
-console.log( addThings.bind(obj)(1,4,6) );
-
-
-Example 2:
-let customer1 = { name: 'Leo', email: 'leo@gmail.com' };
-let customer2 = { name: 'Nat', email: 'nat@hotmail.com' };
-function greeting(text) {
-   console.log(`${text} ${this.name}`);
-}
-let helloLeo = greeting.bind(customer1);
-let helloNat = greeting.bind(customer2);
-helloLeo('Hello'); // Hello Leo
-helloNat('Hello'); // Hello Nat
-The Bind implementation would be like this:
-Function.prototype.bind = function(context) {
-    var fn = this;
-    return function() {
-        fn.apply(context, arguments);
-    };
-};
-
-
-
-Higher-order Functions:  A callback function, also known as a higher-order functions. Functions can take function as argument and returned by another function.
-
-
-First-class objects: In JavaScript, functions are first-class objects; that is, functions are of the type Object and they can be used in a first-class manner like any other object (String, Array, Number, etc.) since they are in fact objects themselves. They can be “stored in variables, passed as arguments to functions, created within functions, and returned from functions”
-
-
-
-Miscellaneous:
-1.	/*
-function add(a){
-    return function(b){   console.log(a + b);  }
-}
-add(2)(3);
+A function is an instance of the Object type
+A function can have properties and has a link back to its constructor method
+A function can be stored as a variable
+A function can be pass as a parameter to another function
+A function can be returned from another function
 */
 
 
-2.	How to pass unknown number of arguments
-
-function argsSumES5() {
-  let s = 0;
-  for(let i=0; i<arguments.length; i++) {
-    s += arguments[i];
-  }
-  return s;
-}
-console.log('sum of 3 arguments: ' + argsSumES5(1,2,3));  // 6
-
-or 
-
-function argsSumES6(...args) {
-  let ss = 0;
-  for(let i=0; i<args.length; i++) {
-    ss += args[i];
-  }
-  return ss;
-}
-console.log('sum of 3 arguments: ' + argsSumES6(1,2,3));  // 6
 
 
 
-
-
-
-
-ES6
-
-New Features
-
-Variable declarations with let and const  are not function scoped. It is block scoped.
-Variable declarations with var  are function scoped.
-
-function varTest() {
-  var x = 1;
-  if (true) {
-    var x = 2;  // same variable!
-    console.log(x);  // 2
-  }
-  console.log(x);  // 2
-}
-varTest()
-
-function letTest() {
-  let x = 1;
-  if (true) {
-    let x = 2;  // different variable
-    console.log(x);  // 2
-  }
-  console.log(x);  // 1
-}
-letTest()
-
-
-
-
-
-Blocks and IIFEs (Immediate Invoked Function Expression)
-Everything inside a curly braces is a block.
-{ 
-let a = 10;
-const b = 20;
-var c = 30;
-}
-console.log( a + b)  // Reference Error
-console.log( c )  // 30
-
-
-Strings
-
-let fName = "Rajesh";
-let lName = "Tammishetty";
-const dob = 1989;
-
-function calcAge(year) {
-  return 2018 - year;
-}
-
-// ES5
-console.log(fName + " " + lName + " born in " + dob + " has " + calcAge(dob) + " years old.");
-
-// ES6
-console.log(`${fName} ${lName}. He was born in ${dob}. He is ${calcAge(dob)} years old. `)
-
-console.log(lName.startsWith("T"));  // true
-console.log(lName.endsWith("Y"));  // false. case sensitive.
-console.log(lName.includes("mmishe"));  // true
-console.log(lName.repeat(3));  // TammishettyTammishettyTammishetty
-
-
-Arrow Functions: Shorter functions and behavior of ‘this’ 
-Only in a method call  ‘this’ keyword actually points to that object.
-In a regular function call  ‘this’ keyword  will always points global object (browser is the window object).
-
-Arrow functions do not have  ‘ this ‘ keyword. It has Lexical this keyword.
-Arrow functions share the lexical  ‘ this ‘ keyword of it’s surroundings.  
-// We don’t need  ‘self = this’  or  .bind(this)
-
-// //  Arrow Functions
-let nflTeamES5 = {
-  players: ['Manning', 'Barkley', 'Daniel'],
-  teamName: 'NY Giants',
-  getDescription: function() {
-    // var self = this;  // resolves the issue. 
-    return this.players.map(function(player) {
-      return `Hello ${player} Welcome to the ${this.teamName} ..!`
-    }) // will get 'teamName' undefined error
-    //}.bind(this)) // resolves the issue
-  }
-}
-console.log(nflTeamES5.getDescription());
-
-let nflTeamES6 = {
-  players: ['Manning', 'Barkley', 'Daniel'],
-  teamName: 'NY Giants',
-  getDescription: function() {
-    return this.players.map((player) => {
-      return `Hello ${player} Welcome to the ${this.teamName} ..!`
-    })
-  }
-}
-console.log(nflTeamES6.getDescription());
-
-
-
-
-const years = [1990, 1989, 1988, 1982, 1983, 1981, 1984];
-
-// ES5
-var ages5 = years.map(function(el5) {
-  return 2018 - el5;
+/*
+    Task:  Sort array of objects
+*/
+let arrayObjSort = [
+    { name: 'Rajesh', age: 29, salary: 6000 },
+    { name: 'Vijay', age: 32, salary: 7000 },
+    { name: 'Nikhil', age: 29, salary: 6100 },
+    { name: 'Vikesh', age: 29, salary: 5700 },
+    { name: 'Pulasani', age: 27, salary: 5600 },
+    { name: 'Mohan', age: 30, salary: 6000 }
+]
+let sortedArrayObject = arrayObjSort.sort((a,b) => {
+    return (a.age > b.age) ? 1 : (a.salary > b.salary) ? 1 : -1;
 })
-console.log(ages5);
-
-// ES6
-let ages6 = years.map(el6 => 2018 - el6)
-let ages6 = years.map((el6) => { return 2018 - el6 })
-console.log(ages6);
+console.log('sort array of objects: ' + JSON.stringify(sortedArrayObject));
 
 
 
+// method 2
+let sortedArrayObject2 = arrayObjSort.sort((a,b) => {
+    return a.salary - b.salary
+})
+console.log('sort array of objects simple way: ' + JSON.stringify(sortedArrayObject2))
 
-Enhanced Object Literals
-To create an object, we simply make a list of key: value pairs delimited by comma.
-Object literals make it easy to quickly create objects with properties.
-1.It provides a shorthand syntax for initializing properties from variables.
-2.Shorthand for writing Methods
-3.Computed Properties and Object Literals
 
-function getLaptopES5(make,year,price) {
-  return {
-    make: make,
-    year: year,
-    carPrice: function() {
-      return price;
-    }
-  }
+// method 3
+Array.prototype.sortBy = function(p) {
+    return this.slice(0).sort(function(a,b) {
+        return (a[p] > b[p]) ? 1 : (a[p] < b[p]) ? -1 : 0;
+    });
 }
-console.log(getLaptopES5('Honda', 2008, 32000).carPrice());
+console.log('sort array of objects using Array prototype: ' + JSON.stringify(arrayObjSort.sortBy('age')));
+
+
+
+// method 4 using underscorejs
+// let sortedArrayObjUnderscorejs = _.sortBy(arrayObjSort, 'salary');
+// console.log('sort array of objects using underscorejs: ' + sortedArrayObjUnderscorejs);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+list = ['a', 'b', 'c', 'd', 'e'];
+console.log(list[1])  // b
+console.log(list.indexOf('b'))  // 1
+
+
+// Adding / Remove items
+list.push('x')
+console.log('push: ' + list)  // push: a,b,c,d,e,x
+
+list.unshift('y')
+console.log('unshift: ' + list)  // unshift: y,a,b,c,d,e,x
+
+list.pop()
+console.log('pop(): ' + list)  // pop(): y,a,b,c,d,e
+
+list.shift()
+console.log('shift(): ' + list)  // shift(): a,b,c,d,e
+
+list.splice(2,0,'Z')
+console.log('splice(2,0,"Z"): ' + list)  // splice(2,0,"Z"): a,b,Z,c,d,e
+
+
+
+// // splice
+arr = ['I', 'write', 'lyrics'];
+console.log(arr)  // ["I", "write", "lyrics"]
+
+
+delete arr[1]
+console.log(arr)  // ["I", empty, "lyrics"]
+console.log(arr.length)  // 3
+
+/*
+    That’s natural, because delete obj.key removes a value by the key. It’s all it does. 
+    Fine for objects. But for arrays we usually want the rest of elements to shift and occupy the freed 
+    place. We expect to have a shorter array now.
+
+    So, special methods should be used.
+
+    The arr.splice(str) method is a swiss army knife for arrays. It can do everything: insert, 
+    remove and replace elements.
+
+    Syntax: arr.splice(index[, deleteCount, elem1, ..., elemN]);
+        It starts from the position index: removes deleteCount elements and then inserts 
+        elem1, ..., elemN at their place. Returns the array of removed elements.
+
+*/
+
+arrSplice = ['I', 'play', 'football'];
+console.log(arrSplice)  // ['I', 'play', 'football']
+
+
+arrSplice.splice(1, 0);  // from index 1 remove 1 element
+console.log('splice(1, 1): ' + arrSplice);  // splice(1, 1): [I,football]
+// console.log('splice(1, 0): ' + arrSplice);  // splice(1, 1): [I,play,football]
+
+
+// arrSplice.splice(1, 1, "high_school", "college");  // removes the 1 indexed element and add high_school, college to the array
+// console.log('splice(1, 1, "high_school", "college"): ' + arrSplice)  // splice(1, 1, "college"): [I,high_school,college,football]
+
+
+
+anotherArr = ["I", "study", "JavaScript", "right", "now"];
+
+anotherArr.splice(0, 3, "Let's", "dance");  // remove 3 first elements and replace them with another
+console.log('anotherArr splice(0, 3, "lets", "dance"): ' + anotherArr) // now ["Let's", "dance", "right", "now"]
+
+
+
+
+// // Negative indexes allowed
+/*
+    Here and in other array methods, negative indexes are allowed. 
+    They specify the position from the end of the array, like here:
+*/
+let arrNegIndex = [1, 2, 5];
+
+// from index -1 (one step from the end)
+// delete 0 elements,
+// then insert 3 and 4
+arrNegIndex.splice(-1, 0, 3, 4);
+console.log( arrNegIndex ); // 1,2,3,4,5
+
+
+
+
+
+
+
+// // Slice
+/*
+    arrSlice.slice(start, end)
+    It returns a new array containing all items from index "start" to "end" (not including "end"). 
+    Both start and end can be negative, in that case position from array end is assumed.
+
+    It works like str.slice, but makes subarrays instead of substrings.
+*/
+// Array slice
+arrSlice = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
+
+arrSlice.slice(2, 5)  // ["c", "d", "e"]
+console.log('arrSlice.slice(2, 5): ' + arrSlice.slice(2, 5))
+
+arrSlice.slice(-5, -1)  // ["e", "f", "g", "h"]
+console.log('arrSlice.slice(-5, -1): ' + arrSlice.slice(-5, -1))
+
+
+// String slice
+someString = 'Javascript Arrays'
+someString.slice(5, 9)  // someString.slice(5, 9): crip
+console.log('someString.slice(5, 9): ' + someString.slice(5, 9))
+
+someString.slice(-5, -1)  // someString.slice(-5, -1): rray
+console.log('someString.slice(-5, -1): ' + someString.slice(-5, -1))
+
+
+
+
+
+
+
+// // Concat
+/*
+    The method arr.concat joins the array with other arrays and/or items.
+    Syntax:  arr.concat(arg1, arg2...)
+
+    It accepts any number of arguments – either arrays or values.  
+    The result is a new array containing items from arr, then arg1, arg2 etc.
+
+    If an argument is an array or has Symbol.isConcatSpreadable property, then all its elements are 
+    copied. Otherwise, the argument itself is copied.
+*/
+concArr = [1, 2, 3]
+
+console.log('concArr.concat([4, 5]): ' + concArr.concat([4, 5]))
+console.log('concArr.concat([6, 7], [8, 9]): ' + concArr.concat([6, 7], [8, 9]))
+console.log('concArr.concat([0], 11, 12): ' + concArr.concat([0], 11, 12))
+
+stringArr = ['a', 'b', 'c']
+
+let concMergeArrays = concArr.concat(...stringArr)  // 1,2,3,a,b,c
+console.log('concMergeArrays using spread operator: ' + concMergeArrays)
+
+
+/*
+    Normally, it only copies elements from arrays (“spreads” them). 
+    Other objects, even if they look like arrays, added as a whole:
+*/
+objArr = {
+    0: 'rajesh',
+    1: ' working as ',
+    length: 2
+}
+arrObj = concArr.concat(objArr)
+console.log('concatinating array with object: ' + arrObj);  // 1,2,3,[object Object]
+
+
+/*
+    But if an array-like object has Symbol.isConcatSpreadable property, 
+    then its elements are added instead:
+*/
+objArr2 = {
+    0: 'rama',
+    1: ' working as ',
+    length: 2,      // copies two vales('rama', ' working as '),  if length: 1...copies only 'rama'
+    [Symbol.isConcatSpreadable]: true
+}
+arrObject = concArr.concat(objArr2)
+console.log('concatinating array with object using Symbol.isConcatSpreadable: ' + arrObject);  // 1,2,3,[object Object]
+
+
+
+
+
+// // Iterate: forEach
+/*
+    The arr.forEach method allows to run a function for every element of the array.
+    We can loop the item / name / element as well as index.
+*/
+let cars = ['Honda', 'Acura', 'Nissan', 'Audi', 'Toyota', ]
+cars.forEach((item) => {
+    console.log('forEach item: ' + item)  // forEach item: Honda, forEach item: Acura, etc...
+})
+
+cars.forEach((a, b) => {
+    console.log('forEach(a, b): ' + `${a} is at ${b} index`)  // 'a' is the element(item) and 'b' is the index.
+}) 
+
+cars.forEach((item, index, array) => {
+    console.log('forEach(item, index, array): ' + `${item} is at ${index} index in ${array}`)
+}) 
+
+/*
+for(let i in cars) {
+    console.log('for loop finding index: ' + i)  // o,1,2,3,4
+    console.log(`for loop finding index and item: + ${cars[i]} has index ${i}`)  //Honda has index 0, etc...
+}
+*/
+
+
+
+
+
+
+
+// // Searching in array
+/*
+    indexOf/lastIndexOf and includes are the methods to search for something in an array.
+
+    arr.indexOf(item, from) looks for item starting from index from, and returns the index where 
+    it was found, otherwise -1.
+    
+    arr.lastIndexOf(item, from) – same, but looks for from right to left.
+    
+    arr.includes(item, from) – looks for item starting from index from, returns true if found.
+*/
+let searchArr = [5,7,2,9,1,'Raj',true,3,5,7]
+
+// indexOf
+console.log(searchArr.indexOf(7))  // 1
+console.log(searchArr.indexOf(true))  // 6
+console.log(searchArr.indexOf(null))  // -1
+console.log(searchArr.includes(5))  // true
+console.log(searchArr.includes(15))  // false
+
+/*
+    Note that the methods use === comparison. So, if we look for false, it finds exactly false and not the zero.
+
+    If we want to check for inclusion, and don’t want to know the exact index, then arr.includes is preferred.
+
+    Also, a very minor difference of includes is that it correctly handles NaN, unlike indexOf/lastIndexOf:
+*/
+const nanArr = [NaN];
+console.log('NaN indexOf(NaN): ' + nanArr.indexOf(NaN) ); // -1 (should be 0, but === equality doesn't work for NaN)
+console.log('NaN includes(NaN): ' + nanArr.includes(NaN) );// true (correct)
+
+
+
+
+
+
+// // find and findIndex
+/*
+    Imagine we have an array of objects. How do we find an object with the specific condition?
+    arr.find method comes in handy.
+
+    The function is called repetitively for each element of the array:
+
+    arr.findIndex method is essentially the same, but it returns the index where the element was 
+    found instead of the element itself and -1 is returned when nothing is found.
+
+    Syntax:   let result = arr.find(function(item, index, array) { });
+*/
+let users = [
+    {id: 1, name: 'Rama'},
+    {id: 5, name: 'Rajesh'},
+    {id: 2, name: 'Sashi'},
+    {id: 5, name: 'Prasanna'},
+    {id: 7, name: 'Sun'}
+]
+
+let user = users.find(item => item.id == 5)
+console.log('find user name with id 5: ' + user.name)  // returns the first element only
+console.log('findIndex of user with id 7: ' + users.findIndex(item => item.id==7))
+
+
+
+
+
+
+// // filter
+/*
+    The find method looks for a single (first) element that makes the function return true.
+
+    filter continues to iterate for all array elements even if true is already returned:
+
+    Syntax:   let results = arr.filter(function(item, index, array) { });
+*/
+
+let ages = [
+    { name: 'Rama', age: 36 },
+    { name: 'Sashi', age: 37 },
+    { name: 'Shobha', age: 37 },
+    { name: 'Manu', age: 33 },
+    { name: 'Rajesh', age: 29 },
+    { name: 'Prasanna', age: 26 }
+]
+
+let ageFilter = ages.filter((item, index) => {
+    return item.age < 30;
+})
+console.log('ageFilter: ' + JSON.stringify(ageFilter))
+console.log('ageFilter: ' + JSON.stringify(ageFilter.find(item => item.age <27)))
+
+
+
+
+
+
+// // Transform an array using map
+/*
+    methods transforming or reordering the array.
+
+    Syntax:   let result = arr.map(function(item, index, array) { })
+*/
+mapArr = ['Rama', 'Sashi', 'Rajesh']
+mapArr.map((item, index) => {
+    console.log(`name ${item} has length ${item.length}`)
+})
+
+
+
+// // sort(fn)
+/*
+    The method arr.sort sorts the array in place.
+    The items are sorted as strings by default.
+    Literally, all elements are converted to strings and then compared. 
+    So, the lexicographic ordering is applied and indeed "2" > "15"  // lexicographic=alphabetical order
+    The arr.sort(fn) method has a built-in implementation of sorting algorithm. (quick sort algorithm).
+    */
+let sortArr = [1,4,15,2,35,10]
+console.log('sortArr using sort(): ' + sortArr.sort())
+
+function compareArrEl(a,b) {   //  a is the second element and b is the first element
+    if(a>b) return 1;
+    if(a==b) return 0;
+    if(a<b) return -1;
+}
+
+sortArr.sort(compareArrEl);
+console.log('sortArr using compareArrEl(a,b): ' + sortArr);
+
+
+
+sortArrAnother = [1, -2, 15, 2, 0, 8];
+sortArrAnother.sort((a,b) => console.log(a + ' < > ' + b))
+console.log(sortArrAnother.sort((a,b) => a-b));
+
+
+
+
+
+// // reverse
+// // The method arr.reverse reverses the order of elements in arr. Syntsx:   arr.reverse();
+
+
+
+
+
+// // split and join
+/*
+    The str.split(delim) method does exactly that. It splits the string into an array by the given delimiter delim.
+    split('') would split the string into an array of letters:
+    arr.join(separator) does the reverse to split. It creates a string of arr items glued by separator between them.
+*/
+
+let splitNames = 'Rama, Sashi, Rajesh';
+let splitNamesArr = splitNames.split(', ')
+console.log('split names array with , delimeter: ' + splitNamesArr);
+console.log('split names upto 2 values: ' + splitNames.split(', ', 2));
+console.log('split names string: ' + splitNames.split(''));
+
+for(let name of splitNamesArr) {
+    console.log('arr.split(', '): ' + `A message to ${name}...`);
+}
+
+let joinNames = ['Rama', 'Sashi', 'Rajesh'];
+console.log('join names array with ";" :  ' + joinNames.join(';'));
+
+
+
+
+
+
+
+
+
+
+
+// // Tasks
+/*
+    Task 1:  Translate border-left-width to borderLeftWidth.
+
+    Write the function camelize(str) that changes dash-separated words like “my-short-string” into camel-cased “myShortString”.
+    That is: removes all dashes, each word after dash becomes uppercased.
+*/
+
+let taskStr = 'border-left-width';
+
+function camelize(str) {
+    return taskStr.split('-')
+                  .map((str, index) => index==0 ? str : str[0].toUpperCase() + str.slice(1) )
+                  .join('');
+}
+console.log('Task camelize(str): ' + camelize(taskStr));  // borderLeftWidth
+
+
+
+
+
+/*
+    Task 2:   Filter unique array members
+    Create a function unique(arr) that should return an array with unique items of arr.
+*/
+let nameStrings = ["Hare", "Krishna", "Hare", "Krishna", "Krishna", "Krishna", "Hare", "Hare", ":-O"];
+function unique(array) {
+    let resultArray = [];
+
+    for(let string of array) {
+        if(!resultArray.includes(string)) {
+            resultArray.push(string);
+        }
+    }
+    return resultArray;
+}
+console.log(unique(nameStrings));  // ["Hare", "Krishna", ":-O"]
+
+// Another way
+let uniqueStrings = nameStrings.filter((string, index, array) => {
+    return array.indexOf(string) === index;
+})
+console.log('uniqueStrings : ' + uniqueStrings);  // uniqueStrings : Hare,Krishna,:-O
+
+
+
+
+
+
+let yearsArr = [2017, 1999, 2000, 2010, 1957, 1947, 1989, 1999, 2018, 1947, 2000]; // length 11
+let uniqueYears = yearsArr.filter((item, index, array) => {
+    return array.indexOf(item) === index;
+    // console.log(`${item} has index of ${index} contains array elements of ${array}`);
+});
+console.log('unique years: ' + uniqueYears);  // length 8
+
+//  Another way in ES6
+// This solution only works for primitive values.
+let distinctYears = [...new Set(yearsArr)]
+console.log('distinctYears using ES6 ...new Set(yearsArr): ' + distinctYears);
+
+
+let distinctStrings = [...new Set(nameStrings)]
+console.log('distinctStrings using ES6 ...new Set(yearsArr): ' + distinctStrings);
+
+
+
+// Unique characters from a string
+let nonUniqueChars = 'abcabcefghfgdt';
+
+function uniqueChars(string) {
+    return String.prototype.concat(...new Set(string))
+}
+console.log('uniqueChars from a string: ' + uniqueChars(nonUniqueChars))
+
+
+let uniqueCharsString = nonUniqueChars.split('').filter((char, index, array) => {
+    return array.indexOf(char) === index;
+}).join('');
+console.log('uniqueCharsString from a string: ' + uniqueCharsString)
+
+
+
+/*
+    Task 3:  Get average age
+    Write the function getAverageAge(users) that gets an array of objects with property age and returns the average age.
+    The formula for the average is (age1 + age2 + ... + ageN) / N.
+*/
+let avgArray = [
+    {name: 'a', age:10},
+    {name: 'b', age:20},
+    {name: 'c', age:30}
+]
+
+function getAverageAges(avgArray) {
+    return avgArray.reduce((prev, cur) => prev+cur.age,0)/avgArray.length
+}
+console.log('get average age from array: ' + getAverageAges(avgArray));  // 20
+
+
+
+
+
+
+/*
+    Task: 4   Filter range
+    Write a function filterRange(arr, a, b) that gets an array arr, looks for elements 
+    between a and b in it and returns an array of them.
+
+    The function should not modify the array. It should return the new array.
+*/
+
+function filterRange(frArr, a, b) {
+    // added brackets around the expression for better readability
+    return frArr.filter(item => a <= item && b >= item);
+}
+
+let frArr = [5, 3, 8, 1];
+
+let filtered = filterRange(frArr, 1, 4);
+console.log('filtered array: ' + filtered);
+console.log('original array: ' + frArr);
+
+
+
+
+
+/*
+    Task: 5   Filter range  "in place"
+    Write a function filterRangeInPlace(arr, a, b) that gets an array arr and removes 
+    from it all values except those that are between a and b. The test is: a ≤ arr[i] ≤ b.
+
+    The function should only modify the array. It should not return anything.
+*/
+
+function filterRangeInPlace(fripArr, a, b) {
+    for (let i = 0; i < fripArr.length; i++) {
+      let val = fripArr[i];
+      console.log(val);
   
-function getLaptopES6(make,year,price) {
-  return {
-    make,
-    year,
-    carPrice() {
-      return price;
+      // remove if outside of the interval
+      if (val < a || val > b) {
+        fripArr.splice(i, 1);
+        i--;
+      }
     }
+}
+
+let fripArr = [5, 3, 8, 1];
+filterRangeInPlace(fripArr, 1, 4); // removed the numbers except from 1 to 4
+console.log('filterRangeInPlace(): ' +  fripArr ); // [3, 1]
+
+
+
+
+
+
+/*
+    Task 6:   Sort in the reverse order
+*/
+let arrTask6 = [5, 2, 1, -10, 8];
+
+let sortedArr6 = arrTask6.sort((a,b) => b-a);
+console.log('original array6: ' + arrTask6 + '  sortedArr6: ' + sortedArr6);
+
+
+
+
+
+/*
+    Task 7:   Copy and sort array
+
+    We have an array of strings arr. We’d like to have a sorted copy of it, but keep arr unmodified.
+    Create a function copySorted(arr) that returns such a copy.
+*/
+let arrTask7 = ["HTML", "JavaScript", "CSS"];
+
+let sortedArr7 = arrTask7.slice().sort();
+console.log('original array7: ' + arrTask7 + '  sortedArr6: ' + sortedArr7);
+
+
+
+
+
+
+/*
+    Task 8:   Map to names
+    You have an array of user objects, each one has user.name. 
+    Write the code that converts it into an array of names.
+*/
+let usersTask8 = [
+    {name: 'john', age: 45},
+    {name: 'Brad', age: 39},
+    {name: 'Odel', age: 25}
+]
+let namesTask8 = usersTask8.map((item) => item.name)
+console.log('retrieving object properties:' + namesTask8);
+
+
+
+
+
+/*
+    Task 9:   Map to objects
+    You have an array of user objects, each one has name, surname and id.
+
+    Write the code to create another array from it, of objects with id and fullName, 
+    where fullName is generated from name and surname.
+*/
+let usersTask9 = [
+    {name: 'John', id: 45, surname:'muligan'},
+    {name: 'Brad', id: 39, surname:'young'},
+    {name: 'Odel', id: 25, surname:'beckham'}
+]
+
+let usersMappedTask8 = usersTask9.map(user => ({
+    fullName: `${user.name} ${user.surname}`,
+    id: user.id
+}));
+console.log('original array: ' + JSON.stringify(usersMappedTask8));
+console.log('retrieving and combining object properties:' + JSON.stringify(usersMappedTask8));
+
+let usersMappedTask8_1 = usersTask9.map(item => ({
+    fullName: item.name + item.surname,
+    id: item.id,
+    Team: 'NY Giants'
+}));
+console.log('original array usersMappedTask8_1: ' + JSON.stringify(usersMappedTask8_1));
+
+
+
+
+/*
+    Task 10:   Sort users by age in object
+    Write the function sortByAge(users) that gets an array of objects 
+    with the age property and sorts them by age.
+*/
+let usersTask10 = [
+    {name: 'john', age: 45},
+    {name: 'Brad', age: 39},
+    {name: 'Odel', age: 25}
+]
+
+let namesSortedAges10 = usersTask10.map((user) => user.name).sort((a,b) => a.age > b.age ? -1 : 1);
+console.log('names sorted by age: ' + namesSortedAges10);
+
+// another way
+function sortByAge(usersTask10) {
+    usersTask10.sort((a, b) => a.age > b.age ? 1 : -1);
   }
+
+sortByAge(usersTask10);
+
+
+
+
+/*
+    Task 11:   Shuffle an array
+    Write the function shuffle(array) that shuffles (randomly reorders) elements of the array.
+    Multiple runs of shuffle may lead to different orders of elements. For instance:
+*/
+function shuffle(task11Arr) {
+    return task11Arr.sort(() => Math.random() - 0.5);
 }
-console.log(getLaptopES6('Acura', 2017, 41000).carPrice());
+  
+let task11Arr = [1, 2, 3];
+console.log('Shuffle array: ' + shuffle(task11Arr));
 
 
 
-Default Function Parameters
-It allows us to set default values for our function parameters if no value is passed or if undefined is passed. 
-// ES5
-function add(a,b) {  return a + b  }
-add() //NaN
 
-function add(a,b) {
-  var b = (typeof(b) !== "undefined") ? b : 5;
-  return a + b; 
+
+/*
+    Task 12:   Get average age
+    Write the function getAverageAge(users) that gets an array of objects with 
+    property age and returns the average age.
+
+    The formula for the average is (age1 + age2 + ... + ageN) / N.
+*/
+let usersTask12 = [
+    {name: 'john', age: 45},
+    {name: 'Brad', age: 39},
+    {name: 'Odel', age: 25}
+]
+
+function getAverageAge(usersTask12) {
+    return usersTask12.reduce((acc, val) => acc+val.age, 0) / usersTask12.length;
 }
-add(4,2) //6
-add(4) //9
-
-// ES6
-function add(a=3, b=5) {  return a + b  }
-add(4,2) // 6
-add(4) // 9
-add() // 8
+console.log('Get average age: ' + getAverageAge(usersTask12))
 
 
 
 
 
+/*
+    Task 12:   Filter unique array members
+    Create a function unique(arr) that should return an array with unique items of arr.
+*/
+let task12Strings = ["Hare", "Krishna", "Hare", "Krishna", "Krishna", "Krishna", "Hare", "Hare", ":-O"];
 
+// Way 1
+let es6DistStringsTask12 = [...new Set(task12Strings)];
 
-Spread Operator
-The syntax is three dots (…) followed by array or iterable. It expands the array(iterable) into individual elements. So, it can be used to expand the array in places where zero or more elements are expected.
-
-1. Copying an Array:  
-Let fruits = [‘apple’, ‘orange’, ‘banana’];
-Let newFruits = […fruits];  // Just copied the Array, not the reference.
-newFruits.push(‘peach’);
-Console.log(fruits);  //  [‘apple’, ‘orange’, ‘banana’];
-Console.log(newFruits);  //  [‘apple’, ‘orange’, ‘banana’, ‘peach’];
-
-
-2. Concatenating an Array:  
-Let fruits = [‘apple’, ‘orange’, ‘banana’];
-Let drinks = [‘coke’,’pepsi’,’lemon soda’];
-Let snacks = […fruits, …drinks];
-Console.log(snacks);  // [‘apple’, ‘orange’, ‘banana’, ‘coke’, ’pepsi’,’lemon soda’]
-
-
-
-3. Spreading elements together with an individual element:  
-Let fruits = [‘apple’, ‘orange’, ‘banana’];
-Let newFruits = [‘pineapple’, …fruits];  
-Console.log(newFruits);  //  [‘pineapple’, ‘apple’, ‘orange’, ‘banana’];
-
-
-4. Spreading elements on function calls:  
-Let fruits = [‘apple’, ‘orange’, ‘banana’];
-Let getFruits = (f1, f2, f3) => {
-	Console.log(“Fruits are: ${f1} ${f2} ${f3});
-);
-getFruits(…fruits);  // Fruits: apple orange banana
-
-
-
-5. Spread syntax for object literals:  
-Let obj1 = { id: 1002, name: ‘Rajesh’ };
-Let obj2 = { age: 30, designation: ‘Principle Developer’ };
-Let emp = {…obj1, …obj2};
-Console.log(emp)  //  { id: 1002, name: ‘Rajesh’, age: 30, designation: ‘Principle Developer’ }
-
-There is a special array-like object named ‘arguments’  that contains all arguments by their index.
-Arrow functions do not have arguments.
-
-// // sum of unknown number of arguments
-function sumUnknownArgs() {
-  let sumOfArgs = 0;
-  for(let i=0; i<arguments.length; i++) {
-    sumOfArgs += arguments[i]
-  }
-  return sumOfArgs;
-}
-console.log(sumUnknownArgs(...ages));
-
-
-function addAges(a, b, c, d) {
-  return a + b + c + d;
+// Way 2
+function uniqueTask12(task12Strings) {
+    let task12Result = []
+    for(let str of task12Strings) {
+        if(!task12Result.includes(str)) {
+            task12Result.push(str)
+        }
+    }
+    return task12Result;
 }
 
-var sumAges = addAges(29, 25, 26, 27);
-console.log(sumAges);
-
-// ES5
-var ages = [20, 30, 25, 35, 45];
-var sum5 = addAges.apply(null, ages);
-console.log(sum5 + " sum5");
-
-// ES6
-const sum6 = addAges(...ages);
-console.log(sum6 + " sum6”);
-
-
-
-
-Rest Parameters 
-A function can be called with any number of arguments, no matter how it is defined.
-
-Function sumAll(…args) {
-	Let sum = 0;
-	For(let arg of args) {
-		Sum += arg;
-	}
-	Return sum;
-}
-sumAll(1,2,3) // 6
-sumAll(10,4,20,6,20,9,30,2) // 101
-
-
-
-
-
-Destructuring 
-Destructuring simply implies breaking down a complex structure(arrays, objects) into simpler parts. 
-
- 
-// ES5
-var Rajesh = ["Tammishetty", 29];
-
-var rName = Rajesh[0];
-var rAge = Rajesh[1];
-console.log (rName, rAge);
-
-
-// ES6
-const [name, age] = ["Tammishetty", 29];
-console.log (name, age);
-
-const obj = {
-  firstName: "Rajesh kumar",
-  lastName: "Tammishetty"
-}
-
-const {firstName, lastName} = obj;
-console.log (firstName, lastName);
-
-const {firstName: a, lastName: b} = obj;
-console.log (a, b);  // Rajesh kumar Tammishetty
-
-
-
-
-
-JavaScript Class   
-In JavaScript class is a special function and just as you define function declarations and function expressions.
-Note: Function declarations are hoisted but not Class declarations. 
-
-The body of a class is executed in strict mode, i.e., code written here is subject to stricter syntax for increased performance, some otherwise silent errors will be thrown
-
-
-
-
-Arrays   
-New array methods are:  from,  of,  find,  findIndex,  fill
-
-const boxes = document.querySelectorAll('.box');
-
-// ES5
-Array.prototype.slice.call(boxes).forEach(function(cur) {
-  cur.style.color = "white";
-})
-
-// ES6
-Array.from(boxes).forEach(cur => {
-  cur.style.color = "purple";
+// Way 3
+let arrFilterTask12 = task12Strings.filter((v,i,array) => {
+    return array.indexOf(v) === i
 })
 
 
+console.log('es6DistStringsTask12: ' + es6DistStringsTask12);
+console.log('uniqueTask12(): ' + uniqueTask12(task12Strings));
+console.log('arrFilterTask12: ' + arrFilterTask12);
+
+
+// Way 4
+Array.prototype.contains = function(task12Strings) {
+    for (var i = 0; i < this.length; i++) {
+      if (this[i] === task12Strings) return true;
+    }
+    return false;
+  };
+  
+  Array.prototype.unique = function() {
+    var arr = [];
+    for (var i = 0; i < this.length; i++) {
+      if (!arr.contains(this[i])) {
+        arr.push(this[i]);
+      }
+    }
+    return arr;
+  }
+  
+  var task12StringsDuplicates = [1, 3, 4, 2, 1, 2, 3, 8];
+  var task12StringsUniques = task12StringsDuplicates.unique(); // result = [1,3,4,2,8]
+  
+  console.log('task12StringsUniques: ' + task12StringsUniques);
 
 
 
@@ -1154,290 +939,607 @@ Array.from(boxes).forEach(cur => {
 
 
 
+// // Unique characters from a string
+// let nonUniqueChars = 'abcabcefghfgdt';
+
+// function uniqueChars(string) {
+//     return String.prototype.concat(...new Set(string))
+// }
+// console.log('uniqueChars from a string: ' + uniqueChars(nonUniqueChars))
+
+
+
+let commonCharsTask12 = 'aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxyyyzzz';
+let uniqueCharsTask12 = commonCharsTask12.split('').filter((char,index,array) => {
+    return array.indexOf(char) === index
+}).join('');
+
+
+console.log('uniqueCharsTask12: ' + uniqueCharsTask12);
+console.log('es6distinctCharsTask12: ' + [...new Set(commonCharsTask12)].join(''));
 
 
 
 
 
 
+/*
+    Task 13:   sum of n arguments
+*/
+function sumArgsTask13() {
+    let sum = 0;
+    for (let i=0; i<arguments.length; i++) {
+        sum = sum+arguments[i]
+    }
+    return sum;
+}
+console.log('sum of n arguments: ' + sumArgsTask13(1,2,3,4,5,6))
+
+
+/*
+    Task 14:   pass n arguments to a function
+*/
+function sumArgsTask13_1(...names) {
+    for (let name of names) {
+        // console.log(`number of arguments: ${names.length}, ${name}`);
+    }
+}
+sumArgsTask13_1('a', 'b', 'c');
 
 
 
 
 
 
+/*
+
+// // Arrays with name and index
+let fruits = ['orange', 'apple', 'mango', 'banana', 'strawberry'];
+
+// fruits.forEach(element => {
+//     console.log('fruits name: ' + element); // fruits name: orange, fruits name: apple, etc
+// });
+
+for( let index in fruits ) {
+    // console.log('fruits index: ' + index);  // fruits index: 0, fruits index: 1, fruits index: 2, etc
+    console.log('fruits with index: ' + fruits[index] + ' has index: ' + index); // fruits with index: orange has index: 0, etc...
+};
+
+
+
+const alpha = ['a', 'b', 'c'];
+
+for (let index in alpha ) {
+  console.log(alpha[index] + ': has index: ' + index);
+}
+
+alpha.forEach((item,index) => {
+  console.log("name: " + item + " has index: " + index);
+})
+
+for (let [index, value] of alpha.entries() ) {
+  console.log(value + ': has index: ' + index);
+}
+*/
 
 
 
 
 
 
+/*
+    Task 15:  Write a JavaScript function to check whether an `input` is an array or not. 
+    Input: console.log(is_array('w3resource'));   Output: false
+    Input: console.log(is_array([1, 2, 4, 0]));   Output: true
+*/
+function is_array( input12 ) {
+    // if (input12.constructor === Array ) {
+    //     return true
+    // }
+    // return false
 
-How to identify the user Device
-Using navigator.userAgent
+    // if (Array.isArray(input12) ) {
+    //     return true
+    // }
+    // return false
 
- Default Parameters
-Maps,  Classes,  Sub classes.
-etc…
+    // if (input12 instanceof Array ) {
+    //     return true
+    // }
+    // return false
 
-
-
-
-
-
-
-Important points:
-•	typeof  null === object;
-typeof  object === object;
-
-
-
-
-
-
-
-
-
-
-Others topics
-
-1. What is the difference b/w dependencies and devDependencies in package.json?
-devDependencies are modules which are only required during development, while dependencies are modules which are also required at runtime.
-devDependencies:  @angular/cli,  tslint,  ts-loader,  webpack,  sass-loader,  Jasmine,  Protractor
-dependencies:  @angular/compiler-cli,  @angular/common,  @angular/router,  zone.js,  core-js
-
-
-
-
-2. There are three main differences between rest parameters and the arguments object:
-
-•	rest parameters are only the ones that haven't been given a separate name (i.e. formally defined in function expression), while the arguments object contains all arguments passed to the function;
-•	the arguments object is not a real array, while rest parameters are Array instances, meaning methods like sort, map, forEach or pop can be applied on it directly;
-•	the arguments object has additional functionality specific to itself (like the callee property).
-
-
-
-
-3. Type Coercion
-Type coercion is the process of converting value from one type to another (such as string to number, object to boolean, and so on). Whenever possibile in your code use always the strict comparison operator = = = instead of = =
-Note: In JavaScript automagically converts any of the two operands to a string if at least one of them is… a string!
-
-Examples:
-True + false = 1;   false + false = 0;
-12 / “6” = 2;
-"number" + 15 + 3 = number153
-15 + 3 + "number" = 18number;
-[1] > null = true;
-"foo" + + "bar" = fooNaN
-'true' == true  // false
-false === 'false'  // false
-null == ' '  // false
-!!"false" == !!"true"  // true
-[‘x’] == ‘x’  // true
-[] + null + 1 = null1
-[1,2,3] == [1,2,3]  // false
-{}+[]+{}+[1] = 0[object Object]1;
-!+[]+[]+![] = truefalse;
-new Date(0) - 0 = 0;
-new Date(0) + 0 = Wed Dec 31 1969 19:00:00 GMT-0500 (Eastern Standard Time)0;
-'hello' + [89, 150.156, 'mike'] = hello89,150.156,mike;
+    if (toString.call(input12) === '[object Array]') {
+        return true
+    }
+    return false 
+}
+console.log('is_array: ' + is_array('w3resource'));  // false
+console.log('is_array: ' + is_array([1, 2, 4, 0]));  // true
 
 
 
 
 
 
+/*
+    Task 16:  Write a JavaScript function to clone an array. 
+    Input: console.log(array_Clone([1, 2, 4, 0]));   Output: [1, 2, 4, 0] 
+    Input: console.log(array_Clone([1, 2, [4, 0]]));   Output: [1, 2, [4, 0]]
+*/
+function array_Clone(arrayClone13) {
+    return arrayClone13.slice(0)
+}
+console.log('array_Clone: ' + array_Clone([1, 2, 4, 0]));
+console.log('array_Clone: ' + array_Clone([1, 2, [[4, 0]]]));
 
-IIFE (Immediately Invoked Function Expression):
-1. An IIFE is a JavaScript function that runs as soon as it is defined.
-2. It is also known as "Self-Executing Anonymous Function" and contains two major parts.
-3. The first is the anonymous function with lexical scope enclosed within the Grouping Operator ( ). This prevents accessing variables within the IIFE idiom as well as polluting the global scope.
-4. The second part creates the immediately executing function expression ( ) through which the JavaScript engine will directly interpret the function.
-5. An Immediately Invoked Function Expression is a good way at protecting the scope of your function and the variables within it.
-6. IIFE functions are anonymous functions encapsulated in parentheses
-7. IIFE functions are called with the parameters immediately after the last parentheses enclosing the anonymous function
-8. IIFE functions are immediately invoked so cannot be called later
-9. IIFE functions can take in zero or any number of arguments
-(function addTogetheIIFEr() {
-  var x1 = 20;
-  var y1 = 20;
-  var answer1 = x1 + y1;
-  console.log('IIFE function: ' + answer1);
+
+
+
+
+
+/*
+    Task 17:  Write a JavaScript function to get the first element of an array. Passing a parameter 'n' 
+    will return the first 'n' elements of the array. 
+    Input: console.log(first([7, 9, 0, -2]));   Output: 7 
+    Input: console.log(first(first([7, 9, 0, -2],-3));   Output: []
+*/
+function firstElements17(array17, n) {
+    if(n < 0) {
+        return []
+    }
+    if (n === null || n === undefined) {
+        return array17[0]
+    }
+    if(array17 === null) {
+        return void 0
+    }
+    return array17.slice(0, n)
+}
+console.log('firstElements17: ' + firstElements17([7, 9, 0, -2]));
+console.log('firstElements17: ' + firstElements17([],3));
+console.log('firstElements17: ' + firstElements17([7, 9, 0, -2],3));
+console.log('firstElements17: ' + firstElements17([7, 9, 0, -2],6));
+console.log('firstElements17: ' + firstElements17([7, 9, 0, -2],-3));
+
+
+
+
+
+/*
+    Task 18:  Write a JavaScript function to get the last element of an array. Passing a parameter 'n' 
+    will return the last 'n' elements of the array. 
+    Input: console.log(last([7, 9, 0, -2],3));   Output: [9, 0, -2]  
+    Input: console.log(last([7, 9, 0, -2],6));   Output: [7, 9, 0, -2]
+*/
+function lastElements18(array18, n) {
+    if(n === null || n === undefined) {
+        return array18[array18.length-1]
+    }
+    // return array18.slice(array18.length-n, array18.length);  // works for n = array18.length
+    return array18.slice(Math.max(array18.length-n, 0))
+}
+console.log('lastElements18: ' + lastElements18([7, 9, 0, -2]));  // -2
+console.log('lastElements18: ' + lastElements18([7, 9, 0, -2],3));  // [9,0,-2]
+console.log('lastElements18: ' + lastElements18([7, 9, 0, -2],4));  // [7,9,0,-2]
+console.log('lastElements18: ' + lastElements18([7, 9, 0, -2],6));  // [7,9,0,-2]
+
+
+
+
+/*
+    Task 19:Write a simple JavaScript program to join all elements of the following array into a string. 
+    Input: myColor = ["Red", "Green", "White", "Black"];   Output: "Red+Green+White+Black"
+    Input: myColor = ["Red", "Green", "White", "Black"];   Output: "Red,Green,White,Black"
+*/
+var array19 = ["Red", "Green", "White", "Black"];
+console.log('join array elements: ' + array19.join('+'));
+console.log('join array elements: ' + array19.join());
+console.log('join array elements: ' + array19.join(','));
+console.log('join array elements: ' + array19.toString());
+
+
+
+
+
+/*
+    Task 20:  Write a JavaScript program which accept a number as input and insert dashes (-) between 
+    each two even numbers. For example if you accept 025468 the output should be 0-254-6-8. 
+    Input: 025468;   Output: 0-254-6-8
+*/
+// var numTask20 = window.prompt();
+var numTask20 = 025468;
+var strTask20 = numTask20.toString();
+var resultArray20 = [strTask20[0]];
+
+for (var x = 1; x < strTask20.length; x++) {
+  if (strTask20[x - 1] % 2 === 0 && strTask20[x] % 2 === 0) {
+    resultArray20.push('-', strTask20[x]);
+  } else {
+    resultArray20.push(strTask20[x]);
+  }
+}
+console.log('insert dashes in between even numbers: ' + resultArray20.join(''));  // 254-6-8
+
+
+
+
+
+/*
+    Task 21:  Write a JavaScript program to sort the items of an array.
+    Input: var arr1 = [ -3, 8, 7, 6, 5, -4, 3, 2, 1 ];   Output:  -4,-3,1,2,3,5,6,7,8
+*/
+var array21 = [-3, 8, 7, 6, 5, -4, 3, 2, 1]
+var sortedArray21 = array21.sort((a,b) => a-b);
+console.log('sorted array in asending order: ' + sortedArray21); // -4,-3,1,2,3,5,6,7,8
+
+
+
+
+
+/*
+    Task 22:  Write a JavaScript program to find the most frequent item of an array.
+    Get the element with the highest occurrence or repeated in an array
+    Input: var arr1=[3, 'a', 'a', 'a', 2, 3, 'a', 3, 'a', 2, 4, 9, 3];   Output:  a ( 5 times )
+*/
+var array22 = [3, 'a', 'a', 'a', 2, 3, 'a', 3, 'a', 2, 4, 9, 3];
+var frequentArray22 = [];
+
+function mostFrequentArrayItem(array22) {
+    return array22.filter((item) => {
+        return 
+    })
+}
+
+
+
+
+/*
+    Task 23: Find element k is present or not in an unsorted array of n elemnets.
+    The first parameter is arr23 and the second parameter is element to be searched.
+*/
+function findElement23(arr23, k) {
+    // if(arr23.indexOf(k) > -1) { return 'YES' } else return 'NO'  // one method.
+    // if(arr23.includes(k)) { return 'YES' } else return 'NO'  // one method.
+    
+    for (var i=0; i< arr23.length; i++) {
+        if(arr23[i] === k) {
+            return 'Found Element'
+        }
+    }
+    return 'Not Found'
+
+
+}
+
+var arr23 = [2,43,5,6,3,2,4,76,1,0,8,9,3,4,67]
+console.log('findElement23: ' + findElement23(arr23, 443));
+
+
+
+
+
+/*
+    Task 24: Find odd numbers in between two numbers.
+    Parameters s (start numbers), e (end number).
+*/
+function findOddEvenNumbers24(s, e) {
+    var arrOdd24 = [];
+    var arrEven24 = [];
+
+    for (var i=s; i<=e; i++) {
+        if(i%2 !== 0) {
+            arrOdd24.push(i);
+        }
+        if(i%2 === 0) {
+            arrEven24.push(i)
+        }
+    }
+    console.log('Odd numbers array: ' + arrOdd24);
+    console.log('Even numbers array: ' + arrEven24);
+    //return arrEven24.push()
+}
+findOddEvenNumbers24(1, 15);
+
+
+
+
+
+/*
+    Task 25:  find and return the second largest element in an array javascript
+ */
+function getSecondLargest(nums25) {
+    // return nums25.sort(function (a, b) {
+    //     return b-a
+    // })[2];
+
+    var first = 0;
+    var second = 0;
+
+    for(var i=0; i<nums25.length; i++) {
+        if(nums25[i] > first) {
+            second = first;
+            first = nums25[i];
+        }
+
+        if(nums25[i] > second && nums25[i] < first) {
+            second = nums25[i]
+        }
+    }
+    return second
+}
+var nums25 = [2,3,6,6,10,9,9,10,7,10,5];
+console.log('getSecondLargest: ' + getSecondLargest(nums25))
+
+
+
+
+
+/*
+    Task 26:  find factorial of a number
+*/
+function factorial26(num26) {
+    
+    /*
+    // first method
+    var result26_1 = 1;
+    if (num26 == 0) {
+        return 1
+    }
+    if (num26 != 0) {
+        return result26_1 = num26 * factorial26(num26 - 1)
+    }
+    return result26_1
+    */
+
+
+    /*
+    // second method
+    var result26_2 = 1;
+    for ( var i=1; i<=num26; i++) {
+        result26_2 = result26_2 * i;
+    }
+    return result26_2;
+    */
+
+    // third method
+    var result26_3 = num26;
+    if (num26 === 0 || num26 === 1) 
+        return 1; 
+    while (num26 > 1) { 
+        num26--;
+        result26_3 *= num26;
+    }
+    return result26_3;
+
+
+}
+console.log('factorial26: ' + factorial26(10))
+
+
+
+/*
+    Task 27:  Complete the getLetter(s) function in the editor. It has one parameter: a string,
+    consisting of lowercase English alphabetic letters (i.e., a through z).
+    It must return A, B, C, or D depending on the following criteria:
+*/
+
+function getLetter27(s) {
+    let letter;
+    // Write your code here
+
+    switch (true) {
+        case 'aeiou'.includes(s[0]):
+            letter = 'A'
+            break;
+        case 'bcdfg'.includes(s[0]):
+            letter = 'B'
+            break;
+        case 'hjklm'.includes(s[0]):
+            letter = 'C'
+            break;
+        case 'npqrstvwxyz'.includes(s[0]):
+            letter = 'D'
+            break;
+    }
+    return letter;
+}
+console.log('getLetter27: ' + getLetter27('herhewfewr'));
+
+
+
+
+/*
+    Task 28: How to empty an array in JavaScript?
+*/
+let emptyArray28 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+let emptyArray28_1 = emptyArray28;
+// methods to empty an array
+// emptyArray28_1 = [];  // empty array reference only, keeps the original array
+emptyArray28_1.length=0;  // empty both array reference and original array
+// emptyArray28_1.splice(0, emptyArray28_1.length);  // empty both array reference and original array
+
+/*
+// // empty both array reference and original array
+while(emptyArray28_1.length > 0) {
+    emptyArray28_1.pop()
+    // emptyArray28_1.shift()
+}
+*/
+
+// console.log('empty an array original array: ' + emptyArray28 )
+// console.log('empty an array array copy: ' + emptyArray28_1 )
+
+
+
+
+
+/*
+    Task 29: How to check if an object is an array or not?
+*/
+let checkArray29 = [1,2];
+// checkArray29.constructor==Array;  // returns true if variable is Array.
+// checkArray29 instanceof Array  // returns true if variable is Array.
+// Object.prototype.toString.call(checkArray29)  // returns '[object Array]'
+console.log('check given variable is array or not?  The given variable is ' + Array.isArray(checkArray29));
+
+
+
+
+
+/*
+    Task 30: IIFE What will be the output of the following code?
+*/
+let output30 = (function(x){
+    delete x;
+    return x;
+})(0);
+console.log('output of IIFE: ' + output30);  // 0
+// The delete operator is used to delete properties from an object. Here x is not an object but a local variable. 
+// delete operators don't affect local variables.
+
+let task30_1 = 1;
+let output30_1 = (function(){
+    delete task30_1;
+    return task30_1;
+})();
+console.log('output of IIFE: ' + output30_1);  // 1
+
+
+let task30_2 = { foo : 1};
+let output30_2 = (function(){
+    delete task30_2.foo;
+    return task30_2.foo;
+})();
+console.log('output of IIFE: ' + output30_2);  // undefined
+
+
+
+
+
+
+/*
+    Task 31: Object.create# What will be the output of the following code?
+*/
+let Employee31 = {
+    company: 'xyz'
+}
+let emp31 = Object.create(Employee31);
+emp31.age = 29;
+
+console.log('Object.create# : ' + emp31.company, emp31.age);  // xyz 29
+
+delete emp31.company
+delete emp31.age
+console.log('Object.create# : ' + emp31.company);  // xyz
+console.log('Object.create# : ' + emp31.age);  // undefined
+// Here, emp31 object has company as its prototype property. 
+// The delete operator doesn't delete prototype property.
+
+
+
+let trees31 = ["redwood","bay","cedar","oak","maple"];
+delete trees31[3];
+console.log('Task31 undefined * 1: ' + trees31);  // redwood,bay,cedar,,maple
+
+
+var bar31 = true;
+console.log('Task31 boolead with addition: ' + bar31 + 0);  // true0 sometimes 1
+console.log('Task31 boolead with addition: ' + bar31 + "xyz");  // truexyz sometimes truexyz
+console.log('Task31 boolead with addition: ' + bar31 + true);  // truetrue sometimes 2
+console.log('Task31 boolead with addition: ' + bar31 + false);  // truefalse sometimes 1
+
+
+
+var z31_1 = 1, y31_1 = z31_1 = typeof y31_1;
+console.log('Task31 associativity: ' + y31_1);  // undefined #because the associativity of the assignment operator is Right to Left, so typeof y will evaluate first
+
+
+
+
+
+/*
+    Task 32: Hoisting What will be the output of the following code?
+*/
+var foo32 = function bar32(){ 
+    // fooFunc31 is visible here 
+    // bar32 is visible here
+ 	//console.log('foo32: ' + typeof bar32()); // Work here :)
+ };
+console.log('foo32: ' + typeof foo32());  // fooFunc31 is visible here
+// console.log('foo32: ' + typeof bar32());  // bar32 is undefined here
+
+function bar31_1(){ return 12; };
+typeof bar31_1();  // number
+
+
+// foo32_1(); // Calling foo function here will give an Error. Function expressions won't hoisted.
+// var foo32_1 = function(){ 
+//     console.log("Hi I am inside Foo");
+// };
+
+
+bar32_1(); // Calling foo function will not give an Error. Function statement will hoist 
+function bar32_1(){ 
+    console.log("Hi I am inside Foo");
+}; 
+
+
+// var salary_32 = "1000$";
+//  (function () {
+//      console.log("Original salary was " + salary_32);  // undefined
+     
+//      var salary_32 = "5000$";
+//      console.log("My New Salary " + salary_32);  // 5000$
+// })();
+
+
+var salary_32 = "1000$";
+(function() {
+     console.log("Original salary was " + salary_32);  // undefined
+     
+     var salary_32 = "5000$";
+     console.log("My New Salary " + salary_32);  // 5000$
 })();
 
-(function (x) { return x * 2; } ) (2);
-
-
-
-
-JavaScript Anonymous Functions: function without a name.
-1.There are three main anonymous function declarations you will run into: Immediately Invoked Function Expression (IIFE), Assignment to Variable, and Anonymous Functions used as a parameter passed to another function
-
-
-
-
-Callback functions
-‘this’ keyword
-Closure
-Functions
-Prototype based programming
-Prototypal inheritance
-OOJavascript
-RegEx
-Design patterns
-modern templating language best practices
-Browserify
-DOM API
-Junkins, enum, eval, 
-Virtual DOM
-Multiple API’s:  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
-Web Sockets: Continues streaming data
-Which form we get data from API
-How to parse data:   var myObject = JSON.parse(myjsonstring);
-Palindrome javascript: using for loop, using split method.
-tree structure in javascript classes / javascript tree data structure:  https://stackoverflow.com/questions/12036966/generic-tree-implementation-in-javascript 
-JSON.stringify, parse
-Event looping methods, bind( )
-Package.json  vs  package-lock.json
-Pseudo elements, pseudo selectors
-addEvenyListner,
-anonymous functions
-IIFE
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1. How to share data between Components in Angular
-Parent to Child:
-1.	Sharing Data via @Input ( ) Decorators:
-If we want to pass data from the parent component to the child component, then we need to use two things: @Input ( ) and property binding.
-
-@Input () decorator to allow data to be passed via the template. 
-@Input () decorator provide a mechanism to allow a parent component to bind its properties to child component there by giving child access to its data. These binding should point to properties available in the parent component.
-// Parent Component
-import { Component, OnInit } from '@angular/core';
-@Component({
-  selector: 'app-parent-home',
-  template: `<p> parent-home works! </p>
-            <app-child-elder [childMessage1]="parentMessage"></app-child-elder>`,
-  styleUrls: ['./parent-home.component.css']
-})
-export class ParentHomeComponent implements OnInit {
-  parentMessage = "This is text is from ParentHomeComponent..!";
-  constructor() { }
-  ngOnInit() { }
+/*
+    Task 33: instanceof operator checks the current object and returns true if the object is of the specified type.
+*/
+function foo_33(){ 
+    return foo_33; 
 }
+console.log('instanceof: ' + new foo_33() instanceof foo_33);  // false
 
 
-// Child Component
-import { Component, OnInit, Input } from '@angular/core';
-@Component({
-  selector: 'app-child-elder',
-  templateUrl: `<div>
-                  <h4>ChildElderComponent Works..!</h4>
-                  <label><b>Message from ParentHomeComponent:</b> {{ childMessage1 }}</label>
-                </div>`,
-  styleUrls: ['./child-elder.component.css']
-})
-export class ChildElderComponent implements OnInit {
-  @Input() childMessage1: string;
+// let dog_33 = new Animal_33();
+// console.log('instanceof: ' + dog_33 instanceof Animal_33); // Output : true
 
-  constructor() { }
-  ngOnInit() { }
+
+
+
+
+/*
+    Task 34: calculate length of Object
+*/
+var obj_34 = { a:1, b:2, c:3 };
+function objLength34(obj_34) {
+    var len = 0;
+    for (key in obj_34) {
+        if(Object.hasOwnProperty(key)) {
+            len++
+        }
+    }
+    return len
 }
-
-
-Child to Parent:
-a.	Sharing data via ViewChild ( ) Decorator:
-When we have to share data between Child to Parent Component, We will have to use ViewChild ( ) Decorator to get reference of the Child Component and get Datan from Child to Parent Component.
-One thing here is, you can get data from Child to Parent only after Child View is initialized. This means We need to implement the AfterViewInit lifecycle hook in the Parent Component to receive Data from Child.
-
-
-b.	Sharing data via Output ( ) Decorator and EventEmitter:
-With @Output ( ) and EventEmitter, we can emit Data back from Child Component to Parent Component. Child Component exposes an EventEmitetr property which emits data when an action / event happens at Child Component. Child Component’s EventEmitter property is an Output property, we mention it with @Output ( ) Decorator.
-
-Any communication:
-a.	Sibling Components Communication:
-Sibling Components can share Data between them using combination of above Parent to Child and Child to Parent relationship. Child1 sends Data to Parent and then Parent sends Data to Child2.
+console.log('find length of object: ' + objLength34(obj_34));
 
 
 
-b.	Sharing Data with a Service:
-When there no relationship between components that time, we need to use a Service to share Data between Components.
-We can use RxJS Subject for sharing Data via the Service.
-
-
-
-
-2. Difference between Component and Directive
-
-
-
-3. Component Life Cycle Hooks
-
-4. 
-
-5. 
-
-6. 
-
-7. 
-
-8. 
-
-9. 
-
-10. 
-
-11. 
-
-12. 
-
-13. 
-
-14. 
-
-15. 
-
-16. 
-
-17. 
-
-18. 
-
-19. 
-
-20. 
-
-
-
-
-
-
-
+(function() {
+    var test34a = test34b = 5;
+})()
+console.log(test34b);  // 5
